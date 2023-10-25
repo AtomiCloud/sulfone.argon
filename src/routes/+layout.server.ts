@@ -19,7 +19,7 @@ export const load: LayoutServerLoad = async ({ locals, route }) => {
 
   // load user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const c: { data: any; fetch?: any } = { data: { session } };
+  const c: { data: any } = { data: { session } };
   // if (config.app.landscape !== "lapras") c.fetch = fetch;
 
   const api = NewApi(c);
@@ -30,20 +30,21 @@ export const load: LayoutServerLoad = async ({ locals, route }) => {
     `Failed to fetch user ${s}`,
   );
 
+  const r = await user.serial();
   const ok = await user.isOk();
 
   if (route.id === "/register") {
     if (ok) {
       throw redirect(307, "/");
     } else {
-      return { session, auth: { signIn } };
+      return { session, auth: { signIn, reach: 1, r } };
     }
   } else {
     if (ok) {
       return {
         session,
         user: await user.unwrap(),
-        auth: { signIn },
+        auth: { signIn, reach: 2, r },
       };
     } else {
       throw redirect(307, "/register");
