@@ -70,8 +70,6 @@ export class HttpClient<SecurityDataType = unknown> {
 
   private baseApiParams: RequestParams = {
     headers: {},
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
   };
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
