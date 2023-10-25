@@ -69,7 +69,6 @@ export class HttpClient<SecurityDataType = unknown> {
     fetch(...fetchParams);
 
   private baseApiParams: RequestParams = {
-    credentials: "same-origin",
     headers: {},
     redirect: "follow",
     referrerPolicy: "no-referrer",
