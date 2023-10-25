@@ -10,7 +10,6 @@
     import cyanprint from "$lib/assets/cyanprint.svg";
 
     onMount(() => {
-        console.log($page.data);
         if ($page.data.auth.signIn) signIn("descope");
 
     });

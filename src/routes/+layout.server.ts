@@ -30,21 +30,20 @@ export const load: LayoutServerLoad = async ({ locals, route }) => {
     `Failed to fetch user ${s}`,
   );
 
-  const r = await user.serial();
   const ok = await user.isOk();
 
   if (route.id === "/register") {
     if (ok) {
       throw redirect(307, "/");
     } else {
-      return { session, auth: { signIn, reach: 1, r } };
+      return { session, auth: { signIn } };
     }
   } else {
     if (ok) {
       return {
         session,
         user: await user.unwrap(),
-        auth: { signIn, reach: 2, r },
+        auth: { signIn },
       };
     } else {
       throw redirect(307, "/register");
