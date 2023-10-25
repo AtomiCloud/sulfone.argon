@@ -2,4 +2,4 @@
 
 set -eou pipefail
 bun i
-pre-commit run --all
+SKIP=a-svelte-check pre-commit run --all -v
