@@ -4,9 +4,16 @@ branch="$CF_PAGES_BRANCH"
 
 set -eou pipefail
 
-branch_upper="$(echo "$branch" | tr '[:lower:]' '[:upper:]')"
+if [ "$branch" = "pichu" ] || [ "$branch" = "pikachu" ] || [ "$branch" = "raichu" ]; then
+  echo "🔍 Qualified branch: ${branch}"
+else
+  echo "🔍 Non-qualified branch: ${branch}, downgrading to pichu"
+  branch="pichu"
+fi
 
-echo "💱 ${branch} Using env vars: ${branch_upper}_DESCOPE_ID, ${branch_upper}_DESCOPE_SECRET, ${branch_upper}_AUTH_SECRET"
+branch_upper="$(echo "$branch" | tr '[:lower:]' '[:upper:]')"
+echo "🗻 Landscape: ${branch}"
+echo "💱 Using env vars: ${branch_upper}_DESCOPE_ID, ${branch_upper}_DESCOPE_SECRET, ${branch_upper}_AUTH_SECRET"
 
 export PUBLIC_LANDSCAPE=${branch}
 export "DESCOPE_ID=${branch_upper}_DESCOPE_ID"
