@@ -22,8 +22,8 @@
     <div class="border-b border-b-muted">
         <div class="flex h-16 items-center justify-between px-4 w-11/12 max-w-[1200px] mx-auto">
             <a href="/" class="flex items-center space-x-2">
-                <img src={cyanprint} alt="CyanPrint" class="h-6 w-6"/>
-                <span class="hidden text-foreground sm:inline-block">CyanPrint</span>
+                <img src={cyanprint} alt="CyanPrint" class="h-12 w-12"/>
+                <span class="hidden text-foreground sm:inline-block ">CyanPrint</span>
             </a>
             <MainNav/>
             <div class="flex items-center space-x-4 lg:space-x-6">
