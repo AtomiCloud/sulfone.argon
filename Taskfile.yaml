@@ -1,0 +1,53 @@
+version: "3"
+
+vars:
+  API: http://127.0.0.1:9001
+
+dotenv:
+  - .env
+
+env:
+  PUBLIC_LANDSCAPE: lapras
+
+tasks:
+  setup:
+    desc: Setups
+    cmds:
+      - bun i
+
+  add:
+    desc: Add Component
+    cmds:
+      - bun x shadcn-svelte@latest add {{.CLI_ARGS}}
+
+  dev:
+    desc: Start development
+    cmds:
+      - bun run dev
+
+  build:
+    desc: Build project
+    cmds:
+      - bun run build
+
+  preview:
+    desc: Preview production build
+    cmds:
+      - bun run preview
+
+  test:
+    desc: Run tests
+    cmds:
+      - bun run test
+
+  error-schema:v1:
+    desc: Generate error schema
+    cmds:
+      - ./scripts/local/error_schema.sh v1
+
+  sdk-gen:
+    desc: Generate SDK from Swagger
+    env:
+      API_URL: "{{.API}}"
+    cmds:
+      - ./scripts/local/sdk_gen.sh v1

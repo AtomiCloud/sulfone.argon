@@ -1,0 +1,40 @@
+<script lang="ts">
+    import "../app.postcss";
+    import {signIn} from "@auth/sveltekit/client";
+    import {page} from "$app/stores";
+    import {onMount} from "svelte";
+    import {LightSwitch} from "$lib/components/ui/light-switch";
+    import {MainNav} from "../lib/components/custom/main-nav";
+    import {setInitialClassState} from "$lib/components/ui/light-switch/light-switch";
+    import {Account} from "../lib/components/custom/account";
+    import cyanprint from "$lib/assets/cyanprint.svg";
+
+    onMount(() => {
+        if ($page.data.auth.signIn) signIn("descope");
+
+    });
+</script>
+<svelte:head>
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+    {@html `<\u{73}cript nonce="%sveltekit.nonce%">(${setInitialClassState.toString()})();</script>`}
+</svelte:head>
+<div class="relative flex min-h-screen flex-col" id="page">
+    <div class="border-b border-b-muted">
+        <div class="flex h-16 items-center justify-between px-4 w-11/12 max-w-[1200px] mx-auto">
+            <a href="/" class="flex items-center space-x-2">
+                <img src={cyanprint} alt="CyanPrint" class="h-6 w-6"/>
+                <span class="hidden text-foreground sm:inline-block">CyanPrint</span>
+            </a>
+            <MainNav/>
+            <div class="flex items-center space-x-4 lg:space-x-6">
+                <LightSwitch/>
+                <Account/>
+            </div>
+        </div>
+    </div>
+    <div class="flex-1">
+        <slot/>
+    </div>
+
+
+</div>
