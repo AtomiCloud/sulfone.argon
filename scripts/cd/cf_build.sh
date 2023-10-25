@@ -16,9 +16,11 @@ echo "🗻 Landscape: ${branch}"
 echo "💱 Using env vars: ${branch_upper}_DESCOPE_ID, ${branch_upper}_DESCOPE_SECRET, ${branch_upper}_AUTH_SECRET"
 
 export PUBLIC_LANDSCAPE=${branch}
-export "DESCOPE_ID=${branch_upper}_DESCOPE_ID"
-export "DESCOPE_SECRET=${branch_upper}_DESCOPE_SECRET"
-export "AUTH_SECRET=${branch_upper}_AUTH_SECRET"
+export "DESCOPE_ID=\$${branch_upper}_DESCOPE_ID"
+export "DESCOPE_SECRET=\$${branch_upper}_DESCOPE_SECRET"
+export "AUTH_SECRET=\$${branch_upper}_AUTH_SECRET"
+
+echo "🔑 Descope ID: ${DESCOPE_ID}"
 
 echo "🔨 Building for branch: ${branch}"
 bun run build
