@@ -11,6 +11,8 @@ function expired(token?: string, now?: Date): boolean {
   return d.exp * 1000 < now.getTime();
 }
 
+console.log(config.auth);
+
 export const handle = SvelteKitAuth({
   providers: [
     {
