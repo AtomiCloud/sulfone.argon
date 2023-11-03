@@ -2,7 +2,7 @@ import type { ISharedConfig } from "./config";
 
 const config: ISharedConfig = {
   app: {
-    landscape: "pichu",
+    landscape: "pikachu",
     platform: "sulfone",
     service: "argon",
     module: "webapp",
@@ -14,7 +14,7 @@ const config: ISharedConfig = {
     scheme: "https",
   },
   api: {
-    domain: "api.zinc.sulfone.pichu.cluster.atomi.cloud",
+    domain: "api.zinc.sulfone.pikachu.cluster.atomi.cloud",
     scheme: "https",
   },
 };

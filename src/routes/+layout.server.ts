@@ -5,9 +5,8 @@ import { expired, toResult } from "$lib/utility";
 import jwtDecode from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
 import { redirect } from "@sveltejs/kit";
-import { config } from "../config/shared";
 
-export const load: LayoutServerLoad = async ({ locals, fetch, route }) => {
+export const load: LayoutServerLoad = async ({ locals, route }) => {
   const session: Session | null = await locals.getSession();
 
   const signIn =
@@ -20,8 +19,8 @@ export const load: LayoutServerLoad = async ({ locals, fetch, route }) => {
 
   // load user
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const c: { data: any; fetch?: any } = { data: { session } };
-  if (config.app.landscape !== "lapras") c.fetch = fetch;
+  const c: { data: any } = { data: { session } };
+  // if (config.app.landscape !== "lapras") c.fetch = fetch;
 
   const api = NewApi(c);
   const s = (jwtDecode(session.access_token!) as JWT).sub ?? "";

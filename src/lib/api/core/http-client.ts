@@ -9,6 +9,8 @@
  * ---------------------------------------------------------------
  */
 
+import { browser } from "$app/environment";
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -68,12 +70,14 @@ export class HttpClient<SecurityDataType = unknown> {
   private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
     fetch(...fetchParams);
 
-  private baseApiParams: RequestParams = {
-    credentials: "same-origin",
-    headers: {},
-    redirect: "follow",
-    referrerPolicy: "no-referrer",
-  };
+  private baseApiParams: RequestParams = browser
+    ? {
+        credentials: "same-origin",
+        headers: {},
+        redirect: "follow",
+        referrerPolicy: "no-referrer",
+      }
+    : { headers: {} };
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
     Object.assign(this, apiConfig);
