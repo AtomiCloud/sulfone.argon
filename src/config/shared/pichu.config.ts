@@ -14,7 +14,7 @@ const config: ISharedConfig = {
     scheme: "https",
   },
   api: {
-    domain: "api.zinc.sulfone.pichu.apps.cluster.atomi.cloud",
+    domain: "api.zinc.sulfone.pichu.cluster.atomi.cloud",
     scheme: "https",
   },
 };
