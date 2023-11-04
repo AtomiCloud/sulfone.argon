@@ -18,9 +18,13 @@ descope_id="export DESCOPE_ID=\$${branch_upper}_DESCOPE_ID"
 descope_secret="export DESCOPE_SECRET=\$${branch_upper}_DESCOPE_SECRET"
 auth_secret="export AUTH_SECRET=\$${branch_upper}_AUTH_SECRET"
 
+printenv
+
 eval "$descope_id"
 eval "$descope_secret"
 eval "$auth_secret"
+
+printenv
 
 # shellcheck disable=SC2153
 echo "🔑 Descope ID: ${DESCOPE_ID}"
