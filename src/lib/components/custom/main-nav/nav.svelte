@@ -14,7 +14,7 @@
         Registry
     </a>
     <a
-        href="/documentation"
+        href="https://docs.cyanprint.dev"
         class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
     >
         Documentation
