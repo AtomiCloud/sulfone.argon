@@ -8,8 +8,9 @@ import { redirect } from "@sveltejs/kit";
 import { config } from "../config/server";
 
 export const load: LayoutServerLoad = async ({ locals, route }) => {
-  console.log(config);
   const session: Session | null = await locals.getSession();
+
+  console.log(config);
 
   const signIn =
     session?.user != null &&

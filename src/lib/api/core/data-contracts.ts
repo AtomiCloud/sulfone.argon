@@ -22,7 +22,7 @@ export interface CreatePluginReq {
 export interface CreatePluginVersionReq {
   description?: string | null;
   dockerReference?: string | null;
-  dockerSha?: string | null;
+  dockerTag?: string | null;
 }
 
 export interface CreateProcessorReq {
@@ -38,7 +38,7 @@ export interface CreateProcessorReq {
 export interface CreateProcessorVersionReq {
   description?: string | null;
   dockerReference?: string | null;
-  dockerSha?: string | null;
+  dockerTag?: string | null;
 }
 
 export interface CreateTemplateReq {
@@ -54,9 +54,9 @@ export interface CreateTemplateReq {
 export interface CreateTemplateVersionReq {
   description?: string | null;
   blobDockerReference?: string | null;
-  blobDockerSha?: string | null;
+  blobDockerTag?: string | null;
   templateDockerReference?: string | null;
-  templateDockerSha?: string | null;
+  templateDockerTag?: string | null;
   plugins?: PluginReferenceReq[] | null;
   processors?: ProcessorReferenceReq[] | null;
 }
@@ -122,6 +122,12 @@ export interface PluginVersionPrincipalResp {
   description?: string | null;
   dockerReference?: string | null;
   dockerSha?: string | null;
+  dockerTag?: string | null;
+}
+
+export interface PluginVersionResp {
+  principal?: PluginVersionPrincipalResp;
+  plugin?: PluginPrincipalResp;
 }
 
 export interface ProcessorInfoResp {
@@ -170,6 +176,55 @@ export interface ProcessorVersionPrincipalResp {
   description?: string | null;
   dockerReference?: string | null;
   dockerSha?: string | null;
+  dockerTag?: string | null;
+}
+
+export interface ProcessorVersionResp {
+  principal?: ProcessorVersionPrincipalResp;
+  processor?: ProcessorPrincipalResp;
+}
+
+export interface PushPluginReq {
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+  versionDescription?: string | null;
+  dockerReference?: string | null;
+  dockerTag?: string | null;
+}
+
+export interface PushProcessorReq {
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+  versionDescription?: string | null;
+  dockerReference?: string | null;
+  dockerTag?: string | null;
+}
+
+export interface PushTemplateReq {
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+  versionDescription?: string | null;
+  blobDockerReference?: string | null;
+  blobDockerTag?: string | null;
+  templateDockerReference?: string | null;
+  templateDockerTag?: string | null;
+  plugins?: PluginReferenceReq[] | null;
+  processors?: ProcessorReferenceReq[] | null;
 }
 
 export interface TemplateInfoResp {
@@ -211,6 +266,8 @@ export interface TemplateVersionPrincipalResp {
   blobDockerSha?: string | null;
   templateDockerReference?: string | null;
   templateDockerSha?: string | null;
+  blobDockerTag?: string | null;
+  templateDockerTag?: string | null;
 }
 
 export interface TemplateVersionResp {

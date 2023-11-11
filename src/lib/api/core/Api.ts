@@ -22,9 +22,14 @@ import type {
   PluginPrincipalResp,
   PluginResp,
   PluginVersionPrincipalResp,
+  PluginVersionResp,
   ProcessorPrincipalResp,
   ProcessorResp,
   ProcessorVersionPrincipalResp,
+  ProcessorVersionResp,
+  PushPluginReq,
+  PushProcessorReq,
+  PushTemplateReq,
   TemplatePrincipalResp,
   TemplateResp,
   TemplateVersionPrincipalResp,
@@ -336,8 +341,33 @@ export class Api<
     },
     params: RequestParams = {},
   ) =>
-    this.request<PluginVersionPrincipalResp, any>({
+    this.request<PluginVersionResp, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions/${ver}`,
+      method: "GET",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Plugin
+   * @name VPluginSlugVersionsLatestDetail
+   * @request GET:/api/v{version}/Plugin/slug/{username}/{pluginName}/versions/latest
+   * @secure
+   */
+  vPluginSlugVersionsLatestDetail = (
+    username: string,
+    pluginName: string,
+    version: string,
+    query?: {
+      bumpDownload?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<PluginVersionResp, any>({
+      path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions/latest`,
       method: "GET",
       query: query,
       secure: true,
@@ -361,7 +391,7 @@ export class Api<
     version: string,
     params: RequestParams = {},
   ) =>
-    this.request<PluginVersionPrincipalResp, any>({
+    this.request<PluginVersionResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions/${ver}`,
       method: "GET",
       secure: true,
@@ -387,6 +417,29 @@ export class Api<
     this.request<PluginVersionPrincipalResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions/${ver}`,
       method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Plugin
+   * @name VPluginPushCreate
+   * @request POST:/api/v{version}/Plugin/push/{username}
+   * @secure
+   */
+  vPluginPushCreate = (
+    username: string,
+    version: string,
+    data: PushPluginReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<PluginVersionPrincipalResp, any>({
+      path: `/api/v${version}/Plugin/push/${username}`,
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -680,8 +733,33 @@ export class Api<
     },
     params: RequestParams = {},
   ) =>
-    this.request<ProcessorVersionPrincipalResp, any>({
+    this.request<ProcessorVersionResp, any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions/${ver}`,
+      method: "GET",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Processor
+   * @name VProcessorSlugVersionsLatestDetail
+   * @request GET:/api/v{version}/Processor/slug/{username}/{processorName}/versions/latest
+   * @secure
+   */
+  vProcessorSlugVersionsLatestDetail = (
+    username: string,
+    processorName: string,
+    version: string,
+    query?: {
+      bumpDownload?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ProcessorVersionResp, any>({
+      path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions/latest`,
       method: "GET",
       query: query,
       secure: true,
@@ -705,7 +783,7 @@ export class Api<
     version: string,
     params: RequestParams = {},
   ) =>
-    this.request<ProcessorVersionPrincipalResp, any>({
+    this.request<ProcessorVersionResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions/${ver}`,
       method: "GET",
       secure: true,
@@ -731,6 +809,29 @@ export class Api<
     this.request<ProcessorVersionPrincipalResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions/${ver}`,
       method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Processor
+   * @name VProcessorPushCreate
+   * @request POST:/api/v{version}/Processor/push/{username}
+   * @secure
+   */
+  vProcessorPushCreate = (
+    username: string,
+    version: string,
+    data: PushProcessorReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<ProcessorVersionPrincipalResp, any>({
+      path: `/api/v${version}/Processor/push/${username}`,
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
@@ -1036,6 +1137,31 @@ export class Api<
    * No description
    *
    * @tags Template
+   * @name VTemplateSlugVersionsLatestDetail
+   * @request GET:/api/v{version}/Template/slug/{username}/{templateName}/versions/latest
+   * @secure
+   */
+  vTemplateSlugVersionsLatestDetail = (
+    username: string,
+    templateName: string,
+    version: string,
+    query?: {
+      bumpDownload?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<TemplateVersionResp, any>({
+      path: `/api/v${version}/Template/slug/${username}/${templateName}/versions/latest`,
+      method: "GET",
+      query: query,
+      secure: true,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Template
    * @name VTemplateIdVersionsDetail2
    * @request GET:/api/v{version}/Template/id/{userId}/{templateId}/versions/{ver}
    * @originalName vTemplateIdVersionsDetail
@@ -1075,6 +1201,29 @@ export class Api<
     this.request<TemplateVersionPrincipalResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}/versions/${ver}`,
       method: "PUT",
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: "json",
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Template
+   * @name VTemplatePushCreate
+   * @request POST:/api/v{version}/Template/push/{username}
+   * @secure
+   */
+  vTemplatePushCreate = (
+    username: string,
+    version: string,
+    data: PushTemplateReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<TemplateVersionPrincipalResp, any>({
+      path: `/api/v${version}/Template/push/${username}`,
+      method: "POST",
       body: data,
       secure: true,
       type: ContentType.Json,
