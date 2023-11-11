@@ -5,10 +5,8 @@ import { expired, toResult } from "$lib/utility";
 import jwtDecode from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
 import { redirect } from "@sveltejs/kit";
-import { config } from "../config/server";
 
 export const load: LayoutServerLoad = async ({ locals, route }) => {
-  console.log(config);
   const session: Session | null = await locals.getSession();
 
   const signIn =
