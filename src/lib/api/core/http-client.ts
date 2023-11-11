@@ -9,8 +9,6 @@
  * ---------------------------------------------------------------
  */
 
-import { browser } from "$app/environment";
-
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -70,14 +68,12 @@ export class HttpClient<SecurityDataType = unknown> {
   private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
     fetch(...fetchParams);
 
-  private baseApiParams: RequestParams = browser
-    ? {
-        credentials: "same-origin",
-        headers: {},
-        redirect: "follow",
-        referrerPolicy: "no-referrer",
-      }
-    : { headers: {} };
+  private baseApiParams: RequestParams = {
+    credentials: "same-origin",
+    headers: {},
+    redirect: "follow",
+    referrerPolicy: "no-referrer",
+  };
 
   constructor(apiConfig: ApiConfig<SecurityDataType> = {}) {
     Object.assign(this, apiConfig);
@@ -208,6 +204,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const queryString = query && this.toQueryString(query);
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
+
     return this.customFetch(
       `${baseUrl || this.baseUrl || ""}${path}${
         queryString ? `?${queryString}` : ""
@@ -233,6 +230,7 @@ export class HttpClient<SecurityDataType = unknown> {
       const r = response as HttpResponse<T, E>;
       r.data = null as unknown as T;
       r.error = null as unknown as E;
+
       const data = !responseFormat
         ? r
         : await response[responseFormat]()
