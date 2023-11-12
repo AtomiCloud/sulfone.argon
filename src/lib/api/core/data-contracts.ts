@@ -121,7 +121,6 @@ export interface PluginVersionPrincipalResp {
   createdAt?: string;
   description?: string | null;
   dockerReference?: string | null;
-  dockerSha?: string | null;
   dockerTag?: string | null;
 }
 
@@ -175,7 +174,6 @@ export interface ProcessorVersionPrincipalResp {
   createdAt?: string;
   description?: string | null;
   dockerReference?: string | null;
-  dockerSha?: string | null;
   dockerTag?: string | null;
 }
 
@@ -263,10 +261,8 @@ export interface TemplateVersionPrincipalResp {
   createdAt?: string;
   description?: string | null;
   blobDockerReference?: string | null;
-  blobDockerSha?: string | null;
-  templateDockerReference?: string | null;
-  templateDockerSha?: string | null;
   blobDockerTag?: string | null;
+  templateDockerReference?: string | null;
   templateDockerTag?: string | null;
 }
 
