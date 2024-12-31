@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 vars:
   API: http://127.0.0.1:9001
@@ -14,6 +14,7 @@ tasks:
     desc: Setups
     cmds:
       - bun i
+      - ./scripts/local/secrets.sh
 
   add:
     desc: Add Component
@@ -48,6 +49,6 @@ tasks:
   sdk-gen:
     desc: Generate SDK from Swagger
     env:
-      API_URL: "{{.API}}"
+      API_URL: '{{.API}}'
     cmds:
       - ./scripts/local/sdk_gen.sh v1

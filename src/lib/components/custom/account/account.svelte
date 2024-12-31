@@ -4,6 +4,7 @@
     import {page} from "$app/stores";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
     import * as Avatar from "$lib/components/ui/avatar";
+    import {LogInIcon} from "lucide-svelte";
 </script>
 
 {#if $page.data.session}
@@ -49,5 +50,9 @@
         </DropdownMenu.Content>
     </DropdownMenu.Root>
 {:else}
-    <Button on:click={() => signIn('descope')}>Sign in</Button>
+    <Button class="hidden md:block" on:click={() => signIn('descope')}>Sign in</Button>
+    <button class="block md:hidden" on:click={() => signIn('descope')}>
+        <LogInIcon class="w-5 h-5 dark:text-white text-black"/>
+    </button>
+
 {/if}

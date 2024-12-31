@@ -2,30 +2,25 @@
 
 // Lightswitch Service
 
-import { get } from "svelte/store";
+import { get } from 'svelte/store';
 // DO NOT replace this ⬇ import, it has to be imported directly
-import { localStorageStore } from "./local-storage-store";
+import { localStorageStore } from './local-storage-store';
 
 // Stores ---
 // TRUE: light, FALSE: dark
 
 /** Store: OS Preference Mode */
-export const modeOsPrefers = localStorageStore<boolean>("modeOsPrefers", false);
+export const modeOsPrefers = localStorageStore<boolean>('modeOsPrefers', false);
 /** Store: User Preference Mode */
-export const modeUserPrefers = localStorageStore<boolean | undefined>(
-  "modeUserPrefers",
-  undefined,
-);
+export const modeUserPrefers = localStorageStore<boolean | undefined>('modeUserPrefers', undefined);
 /** Store: Current Mode State */
-export const modeCurrent = localStorageStore<boolean>("modeCurrent", false);
+export const modeCurrent = localStorageStore<boolean>('modeCurrent', false);
 
 // Get ---
 
 /** Get the OS Preference for light/dark mode */
 export function getModeOsPrefers(): boolean {
-  const prefersLightMode = window.matchMedia(
-    "(prefers-color-scheme: light)",
-  ).matches;
+  const prefersLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
   modeOsPrefers.set(prefersLightMode);
   return prefersLightMode;
 }
@@ -54,9 +49,7 @@ export function setModeUserPrefers(value: boolean): void {
 export function setModeCurrent(value: boolean) {
   const elemHtmlClasses = document.documentElement.classList;
   const classDark = `dark`;
-  value === true
-    ? elemHtmlClasses.remove(classDark)
-    : elemHtmlClasses.add(classDark);
+  value === true ? elemHtmlClasses.remove(classDark) : elemHtmlClasses.add(classDark);
   modeCurrent.set(value);
 }
 
@@ -68,22 +61,16 @@ export function setInitialClassState() {
 
   const htmlElClasses = htmlEl.classList;
   // Conditions
-  const condLocalStorageUserPrefs =
-    localStorage.getItem("modeUserPrefers") === "false";
-  const condLocalStorageUserPrefsExists = !("modeUserPrefers" in localStorage);
-  const condMatchMedia = window.matchMedia(
-    "(prefers-color-scheme: dark)",
-  ).matches;
+  const condLocalStorageUserPrefs = localStorage.getItem('modeUserPrefers') === 'false';
+  const condLocalStorageUserPrefsExists = !('modeUserPrefers' in localStorage);
+  const condMatchMedia = window.matchMedia('(prefers-color-scheme: dark)').matches;
   // Add/remove `.dark` class to HTML element
-  if (
-    condLocalStorageUserPrefs ||
-    (condLocalStorageUserPrefsExists && condMatchMedia)
-  ) {
-    htmlElClasses.add("dark");
-    htmlEl.style.colorScheme = "dark";
+  if (condLocalStorageUserPrefs || (condLocalStorageUserPrefsExists && condMatchMedia)) {
+    htmlElClasses.add('dark');
+    htmlEl.style.colorScheme = 'dark';
   } else {
-    htmlElClasses.remove("dark");
-    htmlEl.style.colorScheme = "light";
+    htmlElClasses.remove('dark');
+    htmlEl.style.colorScheme = 'light';
   }
 }
 
@@ -91,7 +78,7 @@ export function setInitialClassState() {
 
 /** Automatically set the visible light/dark, updates on change. */
 export function autoModeWatcher(): void {
-  const mql = window.matchMedia("(prefers-color-scheme: light)");
+  const mql = window.matchMedia('(prefers-color-scheme: light)');
   function setMode(value: boolean) {
     const htmlEl = document.documentElement;
     const htmlElClasses = htmlEl.classList;
@@ -99,10 +86,10 @@ export function autoModeWatcher(): void {
 
     if (value === true) {
       htmlElClasses.remove(classDark);
-      htmlEl.style.colorScheme = "light";
+      htmlEl.style.colorScheme = 'light';
     } else {
       htmlElClasses.add(classDark);
-      htmlEl.style.colorScheme = "dark";
+      htmlEl.style.colorScheme = 'dark';
     }
   }
   setMode(mql.matches);
