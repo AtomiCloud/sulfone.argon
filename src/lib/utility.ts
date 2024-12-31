@@ -1,47 +1,39 @@
-import { LocalStringError } from "../errors/v1/local_string_error";
-import { LocalExceptionError } from "../errors/v1/local_exception_error";
-import { LocalUnknownError } from "../errors/v1/local_unknown_error";
-import type { Problem } from "../errors/problem";
-import type { HttpResponse } from "$lib/api/core/http-client";
-import type { Result } from "$lib/core/result";
-import { Err, Ok, Res } from "$lib/core/result";
-import type { ProblemDetails } from "../errors/problem_details";
-import { toDetail } from "../errors/error_utility";
-import { Unauthenticated } from "../errors/v1/unauthenticated";
-import { Unauthorized } from "../errors/v1/unauthorized";
-import jwt_decode from "jwt-decode";
+import { LocalStringError } from '../errors/v1/local_string_error';
+import { LocalExceptionError } from '../errors/v1/local_exception_error';
+import { LocalUnknownError } from '../errors/v1/local_unknown_error';
+import type { Problem } from '../errors/problem';
+import type { HttpResponse } from '$lib/api/core/http-client';
+import type { Result } from '$lib/core/result';
+import { Err, Ok, Res } from '$lib/core/result';
+import type { ProblemDetails } from '../errors/problem_details';
+import { toDetail } from '../errors/error_utility';
+import { Unauthenticated } from '../errors/v1/unauthenticated';
+import { Unauthorized } from '../errors/v1/unauthorized';
+import jwt_decode from 'jwt-decode';
 
 const isResponse = <T>(value: unknown): value is HttpResponse<T> => {
-  return (
-    typeof value === "object" &&
-    value !== null &&
-    "error" in value &&
-    "ok" in value &&
-    "data" in value
-  );
+  return typeof value === 'object' && value !== null && 'error' in value && 'ok' in value && 'data' in value;
 };
 
 const isProblem = (value: unknown): value is Problem => {
-  return typeof value === "object" && value !== null && "detail" in value;
+  return typeof value === 'object' && value !== null && 'detail' in value;
 };
 
 const isProblemDetail = (value: unknown): value is ProblemDetails => {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "detail" in value &&
-    "status" in value &&
-    "title" in value &&
-    "type" in value
+    'detail' in value &&
+    'status' in value &&
+    'title' in value &&
+    'type' in value
   );
 };
 
 function pathMatch(pathParts: string[], pattern: string[]) {
   return (
     pathParts.length === pattern.length &&
-    pathParts.every(
-      (part, index) => pattern[index] === "*" || pattern[index] === part,
-    )
+    pathParts.every((part, index) => pattern[index] === '*' || pattern[index] === part)
   );
 }
 
@@ -75,19 +67,15 @@ async function parseErrorResponse<T>(
   if (!isProblemDetail(r.error) && (r.status === 401 || r.status === 403)) {
     return toDetail(
       r.status === 401
-        ? new Unauthenticated("You need to be logged in to view this page.")
-        : new Unauthorized(
-            "You do not have permission to view this page.",
-            [],
-            [],
-          ),
+        ? new Unauthenticated('You need to be logged in to view this page.')
+        : new Unauthorized('You do not have permission to view this page.', [], []),
     );
   }
   if (r.error == null) {
-    const t = (await r.text()) ?? "No body found";
-    return toDetail(new LocalStringError("Unknown client error", t));
+    const t = (await r.text()) ?? 'No body found';
+    return toDetail(new LocalStringError('Unknown client error', t));
   }
-  return parseErrorToDetail("Unknown client error", r.error);
+  return parseErrorToDetail('Unknown client error', r.error);
 }
 
 function parseErrorToDetail(detail: string, error: unknown): ProblemDetails {
@@ -99,7 +87,7 @@ function parseError(detail: string, error: unknown): Problem {
   console.error(error);
   if (error instanceof Error) {
     return new LocalExceptionError(detail, error);
-  } else if (typeof error === "string") {
+  } else if (typeof error === 'string') {
     return new LocalStringError(detail, error);
   } else if (isProblem(error)) {
     return error;
@@ -119,8 +107,7 @@ function unique<T>(value: T, index: number, array: T[]): boolean {
   return array.indexOf(value) === index;
 }
 
-const __ = (i: number) =>
-  new Promise((resolve) => setTimeout(resolve, i * 1000));
+const __ = (i: number) => new Promise(resolve => setTimeout(resolve, i * 1000));
 
 function compare(a?: string | null, b?: string | null): boolean {
   if (a == null || b == null) return false;

@@ -1,4 +1,4 @@
-import type { IClientConfig } from "./config";
+import type { IClientConfig } from './config';
 
 const config: IClientConfig = {};
 

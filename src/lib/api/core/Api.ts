@@ -48,12 +48,10 @@ import type {
   UserExistResp,
   UserPrincipalResp,
   UserResp,
-} from "./data-contracts";
-import { ContentType, HttpClient, type RequestParams } from "./http-client";
+} from './data-contracts';
+import { ContentType, HttpClient, type RequestParams } from './http-client';
 
-export class Api<
-  SecurityDataType = unknown,
-> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType> {
   /**
    * No description
    *
@@ -76,10 +74,10 @@ export class Api<
   ) =>
     this.request<PluginPrincipalResp[], any>({
       path: `/api/v${version}/Plugin`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -90,17 +88,12 @@ export class Api<
    * @request GET:/api/v{version}/Plugin/id/{userId}/{pluginId}
    * @secure
    */
-  vPluginIdDetail = (
-    userId: string,
-    pluginId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vPluginIdDetail = (userId: string, pluginId: string, version: string, params: RequestParams = {}) =>
     this.request<PluginResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -120,11 +113,11 @@ export class Api<
   ) =>
     this.request<PluginPrincipalResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -135,17 +128,12 @@ export class Api<
    * @request DELETE:/api/v{version}/Plugin/id/{userId}/{pluginId}
    * @secure
    */
-  vPluginIdDelete = (
-    userId: string,
-    pluginId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vPluginIdDelete = (userId: string, pluginId: string, version: string, params: RequestParams = {}) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -156,17 +144,12 @@ export class Api<
    * @request GET:/api/v{version}/Plugin/slug/{username}/{name}
    * @secure
    */
-  vPluginSlugDetail = (
-    username: string,
-    name: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vPluginSlugDetail = (username: string, name: string, version: string, params: RequestParams = {}) =>
     this.request<PluginResp, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${name}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -177,19 +160,14 @@ export class Api<
    * @request POST:/api/v{version}/Plugin/id/{userId}
    * @secure
    */
-  vPluginIdCreate = (
-    userId: string,
-    version: string,
-    data: CreatePluginReq,
-    params: RequestParams = {},
-  ) =>
+  vPluginIdCreate = (userId: string, version: string, data: CreatePluginReq, params: RequestParams = {}) =>
     this.request<PluginPrincipalResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -210,9 +188,9 @@ export class Api<
   ) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/like/${likerId}/${like}`,
-      method: "POST",
+      method: 'POST',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -238,10 +216,10 @@ export class Api<
   ) =>
     this.request<PluginVersionPrincipalResp[], any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -261,11 +239,11 @@ export class Api<
   ) =>
     this.request<PluginVersionPrincipalResp, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -291,10 +269,10 @@ export class Api<
   ) =>
     this.request<PluginVersionPrincipalResp[], any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -314,11 +292,11 @@ export class Api<
   ) =>
     this.request<PluginVersionPrincipalResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -343,10 +321,10 @@ export class Api<
   ) =>
     this.request<PluginVersionResp, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -368,10 +346,10 @@ export class Api<
   ) =>
     this.request<PluginVersionResp, any>({
       path: `/api/v${version}/Plugin/slug/${username}/${pluginName}/versions/latest`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -393,9 +371,9 @@ export class Api<
   ) =>
     this.request<PluginVersionResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -416,11 +394,11 @@ export class Api<
   ) =>
     this.request<PluginVersionPrincipalResp, any>({
       path: `/api/v${version}/Plugin/id/${userId}/${pluginId}/versions/${ver}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -431,19 +409,14 @@ export class Api<
    * @request POST:/api/v{version}/Plugin/push/{username}
    * @secure
    */
-  vPluginPushCreate = (
-    username: string,
-    version: string,
-    data: PushPluginReq,
-    params: RequestParams = {},
-  ) =>
+  vPluginPushCreate = (username: string, version: string, data: PushPluginReq, params: RequestParams = {}) =>
     this.request<PluginVersionPrincipalResp, any>({
       path: `/api/v${version}/Plugin/push/${username}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -468,10 +441,10 @@ export class Api<
   ) =>
     this.request<ProcessorPrincipalResp[], any>({
       path: `/api/v${version}/Processor`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -482,17 +455,12 @@ export class Api<
    * @request GET:/api/v{version}/Processor/id/{userId}/{processorId}
    * @secure
    */
-  vProcessorIdDetail = (
-    userId: string,
-    processorId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vProcessorIdDetail = (userId: string, processorId: string, version: string, params: RequestParams = {}) =>
     this.request<ProcessorResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -512,11 +480,11 @@ export class Api<
   ) =>
     this.request<ProcessorPrincipalResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -527,17 +495,12 @@ export class Api<
    * @request DELETE:/api/v{version}/Processor/id/{userId}/{processorId}
    * @secure
    */
-  vProcessorIdDelete = (
-    userId: string,
-    processorId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vProcessorIdDelete = (userId: string, processorId: string, version: string, params: RequestParams = {}) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -548,17 +511,12 @@ export class Api<
    * @request GET:/api/v{version}/Processor/slug/{username}/{name}
    * @secure
    */
-  vProcessorSlugDetail = (
-    username: string,
-    name: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vProcessorSlugDetail = (username: string, name: string, version: string, params: RequestParams = {}) =>
     this.request<ProcessorResp, any>({
       path: `/api/v${version}/Processor/slug/${username}/${name}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -569,19 +527,14 @@ export class Api<
    * @request POST:/api/v{version}/Processor/id/{userId}
    * @secure
    */
-  vProcessorIdCreate = (
-    userId: string,
-    version: string,
-    data: CreateProcessorReq,
-    params: RequestParams = {},
-  ) =>
+  vProcessorIdCreate = (userId: string, version: string, data: CreateProcessorReq, params: RequestParams = {}) =>
     this.request<ProcessorPrincipalResp, any>({
       path: `/api/v${version}/Processor/id/${userId}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -602,9 +555,9 @@ export class Api<
   ) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/like/${likerId}/${like}`,
-      method: "POST",
+      method: 'POST',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -630,10 +583,10 @@ export class Api<
   ) =>
     this.request<ProcessorVersionPrincipalResp[], any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -653,11 +606,11 @@ export class Api<
   ) =>
     this.request<ProcessorVersionPrincipalResp, any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -683,10 +636,10 @@ export class Api<
   ) =>
     this.request<ProcessorVersionPrincipalResp[], any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -706,11 +659,11 @@ export class Api<
   ) =>
     this.request<ProcessorVersionPrincipalResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -735,10 +688,10 @@ export class Api<
   ) =>
     this.request<ProcessorVersionResp, any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -760,10 +713,10 @@ export class Api<
   ) =>
     this.request<ProcessorVersionResp, any>({
       path: `/api/v${version}/Processor/slug/${username}/${processorName}/versions/latest`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -785,9 +738,9 @@ export class Api<
   ) =>
     this.request<ProcessorVersionResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -808,11 +761,11 @@ export class Api<
   ) =>
     this.request<ProcessorVersionPrincipalResp, any>({
       path: `/api/v${version}/Processor/id/${userId}/${processorId}/versions/${ver}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -823,19 +776,14 @@ export class Api<
    * @request POST:/api/v{version}/Processor/push/{username}
    * @secure
    */
-  vProcessorPushCreate = (
-    username: string,
-    version: string,
-    data: PushProcessorReq,
-    params: RequestParams = {},
-  ) =>
+  vProcessorPushCreate = (username: string, version: string, data: PushProcessorReq, params: RequestParams = {}) =>
     this.request<ProcessorVersionPrincipalResp, any>({
       path: `/api/v${version}/Processor/push/${username}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -860,10 +808,10 @@ export class Api<
   ) =>
     this.request<TemplatePrincipalResp[], any>({
       path: `/api/v${version}/Template`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -874,17 +822,12 @@ export class Api<
    * @request GET:/api/v{version}/Template/id/{userId}/{templateId}
    * @secure
    */
-  vTemplateIdDetail = (
-    userId: string,
-    templateId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vTemplateIdDetail = (userId: string, templateId: string, version: string, params: RequestParams = {}) =>
     this.request<TemplateResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -904,11 +847,11 @@ export class Api<
   ) =>
     this.request<TemplatePrincipalResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -919,17 +862,12 @@ export class Api<
    * @request DELETE:/api/v{version}/Template/id/{userId}/{templateId}
    * @secure
    */
-  vTemplateIdDelete = (
-    userId: string,
-    templateId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vTemplateIdDelete = (userId: string, templateId: string, version: string, params: RequestParams = {}) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -940,17 +878,12 @@ export class Api<
    * @request GET:/api/v{version}/Template/slug/{username}/{name}
    * @secure
    */
-  vTemplateSlugDetail = (
-    username: string,
-    name: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vTemplateSlugDetail = (username: string, name: string, version: string, params: RequestParams = {}) =>
     this.request<TemplateResp, any>({
       path: `/api/v${version}/Template/slug/${username}/${name}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -961,19 +894,14 @@ export class Api<
    * @request POST:/api/v{version}/Template/id/{userId}
    * @secure
    */
-  vTemplateIdCreate = (
-    userId: string,
-    version: string,
-    data: CreateTemplateReq,
-    params: RequestParams = {},
-  ) =>
+  vTemplateIdCreate = (userId: string, version: string, data: CreateTemplateReq, params: RequestParams = {}) =>
     this.request<TemplatePrincipalResp, any>({
       path: `/api/v${version}/Template/id/${userId}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -994,9 +922,9 @@ export class Api<
   ) =>
     this.request<Unit, any>({
       path: `/api/v${version}/Template/slug/${username}/${templateName}/like/${likerId}/${like}`,
-      method: "POST",
+      method: 'POST',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1022,10 +950,10 @@ export class Api<
   ) =>
     this.request<TemplateVersionPrincipalResp[], any>({
       path: `/api/v${version}/Template/slug/${username}/${templateName}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1045,11 +973,11 @@ export class Api<
   ) =>
     this.request<TemplateVersionPrincipalResp, any>({
       path: `/api/v${version}/Template/slug/${username}/${templateName}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1075,10 +1003,10 @@ export class Api<
   ) =>
     this.request<TemplateVersionPrincipalResp[], any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}/versions`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1098,11 +1026,11 @@ export class Api<
   ) =>
     this.request<TemplateVersionPrincipalResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}/versions`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1127,10 +1055,10 @@ export class Api<
   ) =>
     this.request<TemplateVersionResp, any>({
       path: `/api/v${version}/Template/slug/${username}/${templateName}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1152,10 +1080,10 @@ export class Api<
   ) =>
     this.request<TemplateVersionResp, any>({
       path: `/api/v${version}/Template/slug/${username}/${templateName}/versions/latest`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1177,9 +1105,9 @@ export class Api<
   ) =>
     this.request<TemplateVersionResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}/versions/${ver}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1200,11 +1128,11 @@ export class Api<
   ) =>
     this.request<TemplateVersionPrincipalResp, any>({
       path: `/api/v${version}/Template/id/${userId}/${templateId}/versions/${ver}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1215,19 +1143,14 @@ export class Api<
    * @request POST:/api/v{version}/Template/push/{username}
    * @secure
    */
-  vTemplatePushCreate = (
-    username: string,
-    version: string,
-    data: PushTemplateReq,
-    params: RequestParams = {},
-  ) =>
+  vTemplatePushCreate = (username: string, version: string, data: PushTemplateReq, params: RequestParams = {}) =>
     this.request<TemplateVersionPrincipalResp, any>({
       path: `/api/v${version}/Template/push/${username}`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1252,10 +1175,10 @@ export class Api<
   ) =>
     this.request<UserPrincipalResp[], any>({
       path: `/api/v${version}/User`,
-      method: "GET",
+      method: 'GET',
       query: query,
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1266,18 +1189,14 @@ export class Api<
    * @request POST:/api/v{version}/User
    * @secure
    */
-  vUserCreate = (
-    version: string,
-    data: CreateUserReq,
-    params: RequestParams = {},
-  ) =>
+  vUserCreate = (version: string, data: CreateUserReq, params: RequestParams = {}) =>
     this.request<UserPrincipalResp, any>({
       path: `/api/v${version}/User`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1291,9 +1210,9 @@ export class Api<
   vUserMeDetail = (version: string, params: RequestParams = {}) =>
     this.request<string, any>({
       path: `/api/v${version}/User/Me`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1309,9 +1228,9 @@ export class Api<
   vUserDetail2 = (id: string, version: string, params: RequestParams = {}) =>
     this.request<UserResp, any>({
       path: `/api/v${version}/User/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1322,19 +1241,14 @@ export class Api<
    * @request PUT:/api/v{version}/User/{id}
    * @secure
    */
-  vUserUpdate = (
-    id: string,
-    version: string,
-    data: UpdateUserReq,
-    params: RequestParams = {},
-  ) =>
+  vUserUpdate = (id: string, version: string, data: UpdateUserReq, params: RequestParams = {}) =>
     this.request<UserPrincipalResp, any>({
       path: `/api/v${version}/User/${id}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1348,7 +1262,7 @@ export class Api<
   vUserDelete = (id: string, version: string, params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/v${version}/User/${id}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
       ...params,
     });
@@ -1360,16 +1274,12 @@ export class Api<
    * @request GET:/api/v{version}/User/username/{username}
    * @secure
    */
-  vUserUsernameDetail = (
-    username: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vUserUsernameDetail = (username: string, version: string, params: RequestParams = {}) =>
     this.request<UserResp, any>({
       path: `/api/v${version}/User/username/${username}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1380,16 +1290,12 @@ export class Api<
    * @request GET:/api/v{version}/User/exist/{username}
    * @secure
    */
-  vUserExistDetail = (
-    username: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vUserExistDetail = (username: string, version: string, params: RequestParams = {}) =>
     this.request<UserExistResp, any>({
       path: `/api/v${version}/User/exist/${username}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1400,16 +1306,12 @@ export class Api<
    * @request GET:/api/v{version}/User/{userId}/tokens
    * @secure
    */
-  vUserTokensDetail = (
-    userId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vUserTokensDetail = (userId: string, version: string, params: RequestParams = {}) =>
     this.request<TokenPrincipalResp[], any>({
       path: `/api/v${version}/User/${userId}/tokens`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1420,19 +1322,14 @@ export class Api<
    * @request POST:/api/v{version}/User/{userId}/tokens
    * @secure
    */
-  vUserTokensCreate = (
-    userId: string,
-    version: string,
-    data: CreateTokenReq,
-    params: RequestParams = {},
-  ) =>
+  vUserTokensCreate = (userId: string, version: string, data: CreateTokenReq, params: RequestParams = {}) =>
     this.request<TokenOTPrincipalResp, any>({
       path: `/api/v${version}/User/${userId}/tokens`,
-      method: "POST",
+      method: 'POST',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1452,11 +1349,11 @@ export class Api<
   ) =>
     this.request<TokenPrincipalResp, any>({
       path: `/api/v${version}/User/${userId}/tokens/${tokenId}`,
-      method: "PUT",
+      method: 'PUT',
       body: data,
       secure: true,
       type: ContentType.Json,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1467,15 +1364,10 @@ export class Api<
    * @request DELETE:/api/v{version}/User/{userId}/tokens/{tokenId}
    * @secure
    */
-  vUserTokensDelete = (
-    userId: string,
-    tokenId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vUserTokensDelete = (userId: string, tokenId: string, version: string, params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/v${version}/User/${userId}/tokens/${tokenId}`,
-      method: "DELETE",
+      method: 'DELETE',
       secure: true,
       ...params,
     });
@@ -1487,15 +1379,10 @@ export class Api<
    * @request POST:/api/v{version}/User/{userId}/tokens/{tokenId}/revoke
    * @secure
    */
-  vUserTokensRevokeCreate = (
-    userId: string,
-    tokenId: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vUserTokensRevokeCreate = (userId: string, tokenId: string, version: string, params: RequestParams = {}) =>
     this.request<void, any>({
       path: `/api/v${version}/User/${userId}/tokens/${tokenId}/revoke`,
-      method: "POST",
+      method: 'POST',
       secure: true,
       ...params,
     });
@@ -1510,9 +1397,9 @@ export class Api<
   vErrorInfoDetail = (version: string, params: RequestParams = {}) =>
     this.request<string[], any>({
       path: `/api/v${version}/error-info`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
   /**
@@ -1525,16 +1412,12 @@ export class Api<
    * @duplicate
    * @secure
    */
-  vErrorInfoDetail2 = (
-    id: string,
-    version: string,
-    params: RequestParams = {},
-  ) =>
+  vErrorInfoDetail2 = (id: string, version: string, params: RequestParams = {}) =>
     this.request<ErrorInfo, any>({
       path: `/api/v${version}/error-info/${id}`,
-      method: "GET",
+      method: 'GET',
       secure: true,
-      format: "json",
+      format: 'json',
       ...params,
     });
 }

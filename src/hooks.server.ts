@@ -1,8 +1,8 @@
-import { SvelteKitAuth } from "@auth/sveltekit";
-import jwt_decode from "jwt-decode";
-import { config } from "./config/server";
-import type { JWT } from "@auth/core/jwt";
-import type { Session } from "@auth/core/types";
+import { SvelteKitAuth } from '@auth/sveltekit';
+import jwt_decode from 'jwt-decode';
+import { config } from './config/server';
+import type { JWT } from '@auth/core/jwt';
+import type { Session } from '@auth/core/types';
 
 function expired(token?: string, now?: Date): boolean {
   if (now == null) now = new Date();
@@ -14,16 +14,16 @@ function expired(token?: string, now?: Date): boolean {
 export const handle = SvelteKitAuth({
   providers: [
     {
-      id: "descope",
-      name: "Descope",
-      type: "oidc",
+      id: 'descope',
+      name: 'Descope',
+      type: 'oidc',
       issuer: `https://api.descope.com/${config.auth.clientId}`,
       wellKnown: `https://api.descope.com/${config.auth.clientId}/.well-known/openid-configuration`,
-      authorization: { params: { scope: "openid email profile" } },
+      authorization: { params: { scope: 'openid email profile' } },
       clientId: config.auth.clientId,
       clientSecret: config.auth.clientSecret,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      checks: ["pkce", "state"] as any,
+      checks: ['pkce', 'state'] as any,
     },
   ],
   callbacks: {
@@ -58,7 +58,7 @@ export const handle = SvelteKitAuth({
       }
 
       const now = new Date();
-      if (!expired(tkn.raw?.access_token ?? "", now)) return token;
+      if (!expired(tkn.raw?.access_token ?? '', now)) return token;
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { raw, ...t } = token;
