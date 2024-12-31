@@ -18,15 +18,15 @@
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html `<\u{73}cript nonce="%sveltekit.nonce%">(${setInitialClassState.toString()})();</script>`}
 </svelte:head>
-<div class="relative flex min-h-screen flex-col" id="page">
+<div class="flex min-h-screen flex-col" id="page">
     <div class="border-b border-b-muted">
-        <div class="flex h-16 items-center justify-between px-4 w-11/12 max-w-[1200px] mx-auto">
+        <div class="flex h-16 items-center justify-between gap-2 md:gap-4 px-4 max-w-[1200px] mx-auto">
             <a href="/" class="flex items-center space-x-2">
                 <img src={cyanprint} alt="CyanPrint" class="h-12 w-12"/>
                 <span class="hidden text-foreground sm:inline-block ">CyanPrint</span>
             </a>
             <MainNav/>
-            <div class="flex items-center space-x-4 lg:space-x-6">
+            <div class="flex items-center md:space-x-2 lg:space-x-6">
                 <LightSwitch/>
                 <Account/>
             </div>
