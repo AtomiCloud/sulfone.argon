@@ -6,11 +6,9 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
 
     # registry
-    nixpkgs.url = "nixpkgs/78058d810644f5ed276804ce7ea9e82d92bee293";
-    nixpkgs-2305.url = "nixpkgs/nixos-23.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
     nixpkgs-2411.url = "nixpkgs/nixos-24.11";
-    nixpkgs-oct-21-23.url = "nixpkgs/7c9cc5a6e5d38010801741ac830a3f8fd667a7a0";
-    atomipkgs.url = "github:kirinnee/test-nix-repo/v28.0.0";
+    atomipkgs.url = "github:AtomiCloud/nix-registry/v2";
 
   };
   outputs =
@@ -24,9 +22,7 @@
       # registries
     , atomipkgs
     , nixpkgs
-    , nixpkgs-2305
     , nixpkgs-2411
-    , nixpkgs-oct-21-23
 
     } @inputs:
     (flake-utils.lib.eachDefaultSystem
@@ -34,9 +30,7 @@
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          pkgs-2305 = nixpkgs-2305.legacyPackages.${system};
           pkgs-2411 = nixpkgs-2411.legacyPackages.${system};
-          pkgs-oct-21-23 = nixpkgs-oct-21-23.legacyPackages.${system};
           atomi = atomipkgs.packages.${system};
           pre-commit-lib = pre-commit-hooks.lib.${system};
         in
@@ -49,7 +43,7 @@
           };
           packages = import ./nix/packages.nix
             {
-              inherit pkgs pkgs-2305 pkgs-2411 atomi pkgs-oct-21-23;
+              inherit pkgs pkgs-2411 atomi;
             };
           env = import ./nix/env.nix {
             inherit pkgs packages;
