@@ -5,6 +5,7 @@
 **Why**: Allows users to choose their unique identifier in the CyanPrint registry after authenticating via Descope.
 
 **Key Files**:
+
 - `src/routes/register/+page.svelte:19-26` → Username validation rules
 - `src/routes/register/+page.svelte:32-43` → `exist()` function to check availability
 - `src/routes/register/+page.svelte:45-57` → `createUser()` function
@@ -51,19 +52,19 @@ sequenceDiagram
     R->>U: 11. Redirect to home
 ```
 
-| # | Step | What | Why | Key File |
-|---|------|------|-----|----------|
-| 1 | Check user | Query Zinc for user by OAuth ID | Determine if new or returning | `src/routes/+layout.server.ts:25-28` |
-| 2 | Not found | Zinc returns 404 | New user needs username | `src/routes/+layout.server.ts:39-46` |
-| 3 | Redirect | Navigate to /register | Show username form | `src/routes/+layout.server.ts:43` |
-| 4 | Enter username | User types desired username | Choose identifier | `src/routes/register/+page.svelte:87-90` |
-| 5 | Check availability | API call to Zinc endpoint | Ensure username is unique | `src/routes/register/+page.svelte:32-43` |
-| 6 | Available response | Username availability status | Show check/X icon | `src/routes/register/+page.svelte:96-114` |
-| 7 | Validate format | Check username rules | Enforce naming conventions | `src/routes/register/+page.svelte:19-26` |
-| 8 | Click confirm | User submits form | Create user record | `src/routes/register/+page.svelte:128` |
-| 9 | Create user | POST to Zinc user endpoint | Persist user in database | `src/routes/register/+page.svelte:45-57` |
-| 10 | Created | Zinc confirms creation | User now exists | `src/routes/register/+page.svelte:48-56` |
-| 11 | Redirect home | Navigate to root page | User is now fully authenticated | `src/routes/register/+page.svelte:51` |
+| #   | Step               | What                            | Why                             | Key File                                  |
+| --- | ------------------ | ------------------------------- | ------------------------------- | ----------------------------------------- |
+| 1   | Check user         | Query Zinc for user by OAuth ID | Determine if new or returning   | `src/routes/+layout.server.ts:25-28`      |
+| 2   | Not found          | Zinc returns 404                | New user needs username         | `src/routes/+layout.server.ts:39-46`      |
+| 3   | Redirect           | Navigate to /register           | Show username form              | `src/routes/+layout.server.ts:43`         |
+| 4   | Enter username     | User types desired username     | Choose identifier               | `src/routes/register/+page.svelte:87-90`  |
+| 5   | Check availability | API call to Zinc endpoint       | Ensure username is unique       | `src/routes/register/+page.svelte:32-43`  |
+| 6   | Available response | Username availability status    | Show check/X icon               | `src/routes/register/+page.svelte:96-114` |
+| 7   | Validate format    | Check username rules            | Enforce naming conventions      | `src/routes/register/+page.svelte:19-26`  |
+| 8   | Click confirm      | User submits form               | Create user record              | `src/routes/register/+page.svelte:128`    |
+| 9   | Create user        | POST to Zinc user endpoint      | Persist user in database        | `src/routes/register/+page.svelte:45-57`  |
+| 10  | Created            | Zinc confirms creation          | User now exists                 | `src/routes/register/+page.svelte:48-56`  |
+| 11  | Redirect home      | Navigate to root page           | User is now fully authenticated | `src/routes/register/+page.svelte:51`     |
 
 ## Edge Cases
 
@@ -74,13 +75,13 @@ sequenceDiagram
 
 ## Validation Rules
 
-| Rule | Pattern | Error Message |
-|------|---------|---------------|
-| Minimum length | ≥ 1 character | Username must contain at least 1 character |
-| Maximum length | ≤ 256 characters | Username must be less than 256 characters |
+| Rule               | Pattern           | Error Message                                           |
+| ------------------ | ----------------- | ------------------------------------------------------- |
+| Minimum length     | ≥ 1 character     | Username must contain at least 1 character              |
+| Maximum length     | ≤ 256 characters  | Username must be less than 256 characters               |
 | Allowed characters | `^[0-9a-zA-Z-]+$` | Username must only contain letters, numbers, and dashes |
-| Start with letter | `^[a-z]` | Username must start with a letter |
-| No trailing dash | `!-$` | Username cannot end with dashes |
+| Start with letter  | `^[a-z]`          | Username must start with a letter                       |
+| No trailing dash   | `!-$`             | Username cannot end with dashes                         |
 
 ## Related
 

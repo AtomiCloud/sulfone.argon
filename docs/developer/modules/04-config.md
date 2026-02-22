@@ -5,6 +5,7 @@
 **Why**: Supports different API endpoints and auth credentials per environment.
 
 **Key Files**:
+
 - `src/config/shared/index.ts:1-17` → Landscape config selection
 - `src/config/shared/pichu.config.ts` → Development config
 - `src/config/shared/pikachu.config.ts` → Staging config
@@ -43,11 +44,11 @@ src/config/
     └── lapras.config.ts
 ```
 
-| Folder | Purpose | Prefix |
-|--------|---------|--------|
-| `client/` | Browser-accessible config | `PUBLIC_` |
-| `server/` | Server-only config (can have secrets) | None |
-| `shared/` | Used by both contexts | `PUBLIC_` if in client |
+| Folder    | Purpose                               | Prefix                 |
+| --------- | ------------------------------------- | ---------------------- |
+| `client/` | Browser-accessible config             | `PUBLIC_`              |
+| `server/` | Server-only config (can have secrets) | None                   |
+| `shared/` | Used by both contexts                 | `PUBLIC_` if in client |
 
 ## Dependencies
 
@@ -57,13 +58,13 @@ flowchart LR
     B -->|PUBLIC_LANDSCAPE| C[Select Config]
 ```
 
-| Dependency | Why |
-|------------|-----|
+| Dependency         | Why                                          |
+| ------------------ | -------------------------------------------- |
 | `PUBLIC_LANDSCAPE` | Environment variable to select active config |
 
-| Dependent | Why |
-|-----------|-----|
-| API Client | Uses `config.api.domain` for baseUrl |
+| Dependent   | Why                                        |
+| ----------- | ------------------------------------------ |
+| API Client  | Uses `config.api.domain` for baseUrl       |
 | Auth System | Uses `config.auth` for Descope credentials |
 
 ## Key Interfaces
@@ -117,12 +118,12 @@ export { config };
 
 ## Landscapes
 
-| Landscape | Name | Purpose |
-|-----------|------|---------|
-| `lapras` | Local | Local development |
-| `pichu` | Development | Dev environment |
-| `pikachu` | Staging | Staging environment |
-| `raichu` | Production | Production environment |
+| Landscape | Name        | Purpose                |
+| --------- | ----------- | ---------------------- |
+| `lapras`  | Local       | Local development      |
+| `pichu`   | Development | Dev environment        |
+| `pikachu` | Staging     | Staging environment    |
+| `raichu`  | Production  | Production environment |
 
 ## Environment Variable
 
@@ -137,6 +138,7 @@ export PUBLIC_LANDSCAPE=lapras  # or pichu, pikachu, raichu
 Each landscape config includes:
 
 ### App Metadata
+
 - `landscape`: Landscape name
 - `platform`: Platform identifier
 - `service`: Service name (argon)
@@ -144,15 +146,18 @@ Each landscape config includes:
 - `version`: Current version
 
 ### Error Portal
+
 - `enabled`: Whether error portal is active
 - `scheme`: HTTP or HTTPS
 - `host`: Error portal hostname
 
 ### API Configuration
+
 - `domain`: Zinc API domain
 - `scheme`: HTTP or HTTPS
 
 ### Auth Configuration (server-only)
+
 - `clientId`: Descope project ID
 - `clientSecret`: Descope project secret
 - `secret`: Session encryption secret

@@ -33,12 +33,12 @@ Set the landscape environment variable:
 export PUBLIC_LANDSCAPE=lapras  # or pichu, pikachu, raichu
 ```
 
-| Landscape | Purpose |
-|-----------|---------|
-| `lapras` | Local development (default) |
-| `pichu` | Development environment |
-| `pikachu` | Staging environment |
-| `raichu` | Production environment |
+| Landscape | Purpose                     |
+| --------- | --------------------------- |
+| `lapras`  | Local development (default) |
+| `pichu`   | Development environment     |
+| `pikachu` | Staging environment         |
+| `raichu`  | Production environment      |
 
 ### 4. Setup Secrets
 
@@ -114,16 +114,16 @@ This creates a production build in `.svelte-kit/output/`.
 
 ## Commands Reference
 
-| Command | Description |
-|---------|-------------|
-| `pls setup` | Install dependencies and setup secrets |
-| `pls dev` | Start development server |
-| `pls build` | Build for production |
-| `pls preview` | Preview production build locally |
-| `pls test` | Run Playwright E2E tests |
-| `pls check` | Type checking with svelte-check |
-| `pls add <component>` | Add shadcn-svelte component |
-| `pls sdk-gen` | Generate API client from Zinc OpenAPI |
+| Command               | Description                            |
+| --------------------- | -------------------------------------- |
+| `pls setup`           | Install dependencies and setup secrets |
+| `pls dev`             | Start development server               |
+| `pls build`           | Build for production                   |
+| `pls preview`         | Preview production build locally       |
+| `pls test`            | Run Playwright E2E tests               |
+| `pls check`           | Type checking with svelte-check        |
+| `pls add <component>` | Add shadcn-svelte component            |
+| `pls sdk-gen`         | Generate API client from Zinc OpenAPI  |
 
 ## API Client Regeneration
 
@@ -139,8 +139,8 @@ This runs `scripts/local/sdk_gen.sh v1` which fetches the spec and generates Typ
 
 ## Configuration
 
-| Option | Default | Description |
-|--------|---------|-------------|
+| Option             | Default  | Description                                      |
+| ------------------ | -------- | ------------------------------------------------ |
 | `PUBLIC_LANDSCAPE` | `lapras` | Environment to use (lapras/pichu/pikachu/raichu) |
 
 ## Common Issues
@@ -150,6 +150,7 @@ This runs `scripts/local/sdk_gen.sh v1` which fetches the spec and generates Typ
 **Symptom**: `error: experimental Nix feature 'nix-command' is disabled`
 
 **Solution**: Enable flakes in `~/.config/nix/nix.conf`:
+
 ```
 experimental-features = nix-command flakes
 ```

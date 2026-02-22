@@ -5,6 +5,7 @@
 **Why**: Users need to discover and inspect artifacts before using them.
 
 **Key Files**:
+
 - `src/routes/registry/+page.svelte:51-66` → `searchTemplate()` function
 - `src/routes/registry/+page.svelte:68-83` → `searchPlugin()` function
 - `src/routes/registry/+page.svelte:85-100` → `searchProcessor()` function
@@ -58,32 +59,33 @@ sequenceDiagram
     R-->>U: 14. Go to detail page
 ```
 
-| # | Step | What | Why | Key File |
-|---|------|------|-----|----------|
-| 1 | Visit page | User navigates to /registry | Access search interface | `src/routes/registry/+page.svelte:125-165` |
-| 2 | Show UI | Render search input and dropdown | User can select and search | `src/routes/registry/+page.svelte:127-140` |
-| 3 | Select type | User chooses Template/Plugin/Processor | Filter results by type | `src/routes/registry/+page.svelte:130-138` |
-| 4 | Update value | resource.value changes | Triggers re-search | `src/routes/registry/+page.svelte:18-22` |
-| 5 | Type query | User enters search text | Find specific resources | `src/routes/registry/+page.svelte:128-129` |
-| 6 | Reactive | Svelte reactive statement fires | Auto-search on input | `src/routes/registry/+page.svelte:115` |
-| 7 | Call find | Route to appropriate search function | Dispatch based on type | `src/routes/registry/+page.svelte:102-113` |
-| 8 | Search API | Call Zinc search endpoint | Query registry database | `src/routes/registry/+page.svelte:51-100` |
-| 9 | Results | Zinc returns matching resources | Display to user | `src/lib/api/core/Api.ts` |
-| 10 | Render cards | Create card components | Show results in grid | `src/routes/registry/+page.svelte:147-161` |
-| 11 | Display grid | Show cards with summaries | User can browse results | `src/lib/components/cards/` |
-| 12 | Click card | User clicks on a result | View full details | `src/lib/components/cards/template.svelte` |
-| 13 | Navigate | SvelteKit navigation | Go to detail page | `src/routes/registry/+page.svelte` |
-| 14 | Detail page | Show full resource information | User can evaluate and use | `src/routes/templates/[user_id]/[template_id]/+page.svelte` |
+| #   | Step         | What                                   | Why                        | Key File                                                    |
+| --- | ------------ | -------------------------------------- | -------------------------- | ----------------------------------------------------------- |
+| 1   | Visit page   | User navigates to /registry            | Access search interface    | `src/routes/registry/+page.svelte:125-165`                  |
+| 2   | Show UI      | Render search input and dropdown       | User can select and search | `src/routes/registry/+page.svelte:127-140`                  |
+| 3   | Select type  | User chooses Template/Plugin/Processor | Filter results by type     | `src/routes/registry/+page.svelte:130-138`                  |
+| 4   | Update value | resource.value changes                 | Triggers re-search         | `src/routes/registry/+page.svelte:18-22`                    |
+| 5   | Type query   | User enters search text                | Find specific resources    | `src/routes/registry/+page.svelte:128-129`                  |
+| 6   | Reactive     | Svelte reactive statement fires        | Auto-search on input       | `src/routes/registry/+page.svelte:115`                      |
+| 7   | Call find    | Route to appropriate search function   | Dispatch based on type     | `src/routes/registry/+page.svelte:102-113`                  |
+| 8   | Search API   | Call Zinc search endpoint              | Query registry database    | `src/routes/registry/+page.svelte:51-100`                   |
+| 9   | Results      | Zinc returns matching resources        | Display to user            | `src/lib/api/core/Api.ts`                                   |
+| 10  | Render cards | Create card components                 | Show results in grid       | `src/routes/registry/+page.svelte:147-161`                  |
+| 11  | Display grid | Show cards with summaries              | User can browse results    | `src/lib/components/cards/`                                 |
+| 12  | Click card   | User clicks on a result                | View full details          | `src/lib/components/cards/template.svelte`                  |
+| 13  | Navigate     | SvelteKit navigation                   | Go to detail page          | `src/routes/registry/+page.svelte`                          |
+| 14  | Detail page  | Show full resource information         | User can evaluate and use  | `src/routes/templates/[user_id]/[template_id]/+page.svelte` |
 
 ## Search Functions
 
-| Function | Resource Type | API Endpoint |
-|----------|--------------|--------------|
-| `searchTemplate()` | Templates | `vTemplateDetail()` |
-| `searchPlugin()` | Plugins | `vPluginDetail()` |
-| `searchProcessor()` | Processors | `vProcessorDetail()` |
+| Function            | Resource Type | API Endpoint         |
+| ------------------- | ------------- | -------------------- |
+| `searchTemplate()`  | Templates     | `vTemplateDetail()`  |
+| `searchPlugin()`    | Plugins       | `vPluginDetail()`    |
+| `searchProcessor()` | Processors    | `vProcessorDetail()` |
 
 All search functions:
+
 - Accept `searchTerm` and `limit` parameters
 - Return arrays of principal responses
 - Set `problem` store on error

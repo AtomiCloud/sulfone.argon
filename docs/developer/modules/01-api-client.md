@@ -5,6 +5,7 @@
 **Why**: Provides type-safe API access that stays in sync with backend changes.
 
 **Key Files**:
+
 - `src/store.ts:17-36` → `NewApi()` factory function
 - `src/store.ts:38-56` → Client-side API store with auto sign-in
 - `src/lib/api/core/Api.ts` → Auto-generated API client class
@@ -29,11 +30,11 @@ src/lib/api/core/
 └── data-contracts.ts   # TypeScript interfaces (auto-generated)
 ```
 
-| File | Purpose |
-|------|---------|
-| `Api.ts` | Generated API methods (vTemplateDetail, vUserCreate, etc.) |
-| `http-client.ts` | Base fetch wrapper with security worker |
-| `data-contracts.ts` | Request/response type definitions |
+| File                | Purpose                                                    |
+| ------------------- | ---------------------------------------------------------- |
+| `Api.ts`            | Generated API methods (vTemplateDetail, vUserCreate, etc.) |
+| `http-client.ts`    | Base fetch wrapper with security worker                    |
+| `data-contracts.ts` | Request/response type definitions                          |
 
 ## Dependencies
 
@@ -44,13 +45,13 @@ flowchart LR
     C --> D[Descope]
 ```
 
-| Dependency | Why |
-|------------|-----|
-| Zinc Backend | Provides REST API to consume |
-| Auth System | Provides JWT tokens for requests |
+| Dependency   | Why                              |
+| ------------ | -------------------------------- |
+| Zinc Backend | Provides REST API to consume     |
+| Auth System  | Provides JWT tokens for requests |
 
-| Dependent | Why |
-|-----------|-----|
+| Dependent    | Why                                     |
+| ------------ | --------------------------------------- |
 | All Features | Use API client to communicate with Zinc |
 
 ## Key Interfaces
@@ -90,7 +91,7 @@ Creates a new API client instance for server-side use.
 **Key File**: `src/store.ts:17-36`
 
 ```typescript
-export function NewApi({ data, fetch }: { data?: any; fetch?: any }): Api
+export function NewApi({ data, fetch }: { data?: any; fetch?: any }): Api;
 ```
 
 - Uses provided `data` for session access
@@ -118,6 +119,7 @@ pls sdk-gen
 ```
 
 This:
+
 1. Fetches OpenAPI spec from Zinc
 2. Runs `swagger-typescript-api`
 3. Generates `Api.ts` and `data-contracts.ts`
@@ -142,7 +144,7 @@ securityWorker: async () => {
     };
   }
   return {};
-}
+};
 ```
 
 ## Related

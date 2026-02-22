@@ -5,6 +5,7 @@
 **Why**: Provides error details for client-side error display and debugging.
 
 **Key Files**:
+
 - `src/routes/api/v1/error_info/+server.ts` → List all error types
 - `src/routes/api/v1/error_info/[slug]/+server.ts` → Get specific error
 - `src/routes/api/v1/error_info/[slug]/schema.json` → Error schema
@@ -42,6 +43,7 @@ Returns a list of all error types available in the system.
 Returns details for a specific error type.
 
 **Parameters**:
+
 - `slug` (path): Error type identifier
 
 **Response**: `ErrorInfo`
@@ -60,12 +62,12 @@ Returns details for a specific error type.
 
 Common error types returned by this API:
 
-| Slug | Title | Description |
-|------|-------|-------------|
-| `user_not_found` | User Not Found | User does not exist in Zinc |
-| `token_expired` | Token Expired | JWT token has expired |
-| `invalid_credentials` | Invalid Credentials | Authentication failed |
-| `network_error` | Network Error | Unable to reach API |
+| Slug                  | Title               | Description                 |
+| --------------------- | ------------------- | --------------------------- |
+| `user_not_found`      | User Not Found      | User does not exist in Zinc |
+| `token_expired`       | Token Expired       | JWT token has expired       |
+| `invalid_credentials` | Invalid Credentials | Authentication failed       |
+| `network_error`       | Network Error       | Unable to reach API         |
 
 ## Usage
 

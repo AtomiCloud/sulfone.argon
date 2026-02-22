@@ -5,6 +5,7 @@
 **Why**: Centralizes authentication state and API client configuration for use across the application.
 
 **Key Files**:
+
 - `src/store.ts:12` → `problem` writable store for error state
 - `src/store.ts:14` → `loading` writable store for loading state
 - `src/store.ts:17-36` → `NewApi()` factory function
@@ -28,12 +29,12 @@ src/store.ts
 └── api               # Writable<Api> for client-side
 ```
 
-| Export | Type | Purpose |
-|--------|------|---------|
-| `problem` | `Writable<ProblemDetails \| null>` | Global error state |
-| `loading` | `Writable<boolean>` | Global loading state |
-| `NewApi` | `function` | Create API client for server-side use |
-| `api` | `Writable<Api>` | Client-side API store |
+| Export    | Type                               | Purpose                               |
+| --------- | ---------------------------------- | ------------------------------------- |
+| `problem` | `Writable<ProblemDetails \| null>` | Global error state                    |
+| `loading` | `Writable<boolean>`                | Global loading state                  |
+| `NewApi`  | `function`                         | Create API client for server-side use |
+| `api`     | `Writable<Api>`                    | Client-side API store                 |
 
 ## Dependencies
 
@@ -44,16 +45,16 @@ flowchart LR
     A --> D[Config]
 ```
 
-| Dependency | Why |
-|------------|-----|
-| API Client | Api class that we configure and store |
-| Auth System | Session data for security worker |
-| Config | API baseUrl configuration |
+| Dependency  | Why                                   |
+| ----------- | ------------------------------------- |
+| API Client  | Api class that we configure and store |
+| Auth System | Session data for security worker      |
+| Config      | API baseUrl configuration             |
 
-| Dependent | Why |
-|-----------|-----|
-| All Features | Access API client via `get(api)` |
-| Error Handling | Set problem store on errors |
+| Dependent      | Why                              |
+| -------------- | -------------------------------- |
+| All Features   | Access API client via `get(api)` |
+| Error Handling | Set problem store on errors      |
 
 ## Key Interfaces
 
@@ -68,6 +69,7 @@ export const problem: Writable<ProblemDetails | null> = writable(null);
 ```
 
 Components can:
+
 - Subscribe: `$problem` to get current error
 - Update: `problem.set(error)` to show error
 - Clear: `problem.set(null)` to dismiss
@@ -89,10 +91,11 @@ Creates API client for server-side use (in load functions).
 **Key File**: `src/store.ts:17-36`
 
 ```typescript
-export function NewApi({ data, fetch }: { data?: any; fetch?: any }): Api
+export function NewApi({ data, fetch }: { data?: any; fetch?: any }): Api;
 ```
 
 **Parameters**:
+
 - `data`: SvelteKit load function data (contains session)
 - `fetch`: SvelteKit fetch for server-side requests
 
@@ -105,15 +108,18 @@ Client-side API store with automatic auth injection.
 **Key File**: `src/store.ts:38-56`
 
 ```typescript
-export const api = writable(new Api({
-  baseUrl: `${config.api.scheme}://${config.api.domain}`,
-  securityWorker: async () => {
-    // ... token injection logic
-  }
-}));
+export const api = writable(
+  new Api({
+    baseUrl: `${config.api.scheme}://${config.api.domain}`,
+    securityWorker: async () => {
+      // ... token injection logic
+    },
+  }),
+);
 ```
 
 **Security Worker**:
+
 - Checks for valid session
 - Validates token expiration
 - Returns Authorization header or redirects to login
