@@ -179,10 +179,10 @@ These properties are in `src/config/server/*.ts` only and cannot be accessed fro
 
 ### Import in Client Code
 
-Use the `$config/shared` path alias (configured in `svelte.config.js`):
+Use a relative path from your file to the shared config:
 
 ```typescript
-import { config } from '$config/shared';
+import { config } from './config/shared'; // Adjust path based on your file location
 
 const apiUrl = `${config.api.scheme}://${config.api.domain}`;
 ```
@@ -192,10 +192,12 @@ const apiUrl = `${config.api.scheme}://${config.api.domain}`;
 For server-only code that needs auth credentials:
 
 ```typescript
-import { config } from '$config/server';
+import { config } from './config/server'; // Adjust path based on your file location
 
 const descopeIssuer = `https://api.descope.com/${config.auth.clientId}`;
 ```
+
+**Note**: The project uses relative imports for config. You can add a `$config` alias in `svelte.config.js` under `kit.alias` for cleaner imports if desired.
 
 ## Related
 
