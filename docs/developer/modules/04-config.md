@@ -136,7 +136,7 @@ If `PUBLIC_LANDSCAPE` is unset or contains an invalid value, `config` will be `u
 
 ## Environment Variable
 
-Set the landscape at build time or runtime:
+Set the landscape at build time:
 
 ```bash
 export PUBLIC_LANDSCAPE=lapras  # or pichu, pikachu, raichu

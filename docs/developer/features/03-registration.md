@@ -69,7 +69,7 @@ sequenceDiagram
 ## Edge Cases
 
 - **Username taken**: Show X icon and disable confirm button
-- **Invalid format**: Show validation error message (must start with letter, no trailing dashes, alphanumeric + dashes only)
+- **Invalid format**: Show validation error message (must start with letter, no trailing dashes, lowercase alphanumeric + dashes only)
 - **API error**: Display problem details to user
 - **Already registered**: Redirect to home if user somehow visits /register with existing username
 
