@@ -58,7 +58,7 @@ The application will be available at `http://localhost:5173`.
 
 ## Project Structure
 
-```
+```text
 src/
 ├── routes/          # SvelteKit file-based routing
 │   ├── +layout.svelte       # Root layout wrapper
@@ -151,7 +151,7 @@ This runs `scripts/local/sdk_gen.sh v1` which fetches the spec and generates Typ
 
 **Solution**: Enable flakes in `~/.config/nix/nix.conf`:
 
-```
+```ini
 experimental-features = nix-command flakes
 ```
 

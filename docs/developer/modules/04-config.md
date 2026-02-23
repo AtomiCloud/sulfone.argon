@@ -21,7 +21,7 @@
 
 ## Structure
 
-```
+```text
 src/config/
 ├── client/          # Browser-accessible (PUBLIC_ prefixed)
 │   ├── index.ts

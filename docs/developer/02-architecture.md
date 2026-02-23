@@ -175,7 +175,7 @@ Business-specific components:
 
 Per-landscape configuration in `src/config/`:
 
-```
+```text
 src/config/
 ├── client/          # Browser-accessible (PUBLIC_ prefixed)
 ├── server/          # Server-only (can include secrets)
@@ -186,7 +186,6 @@ Each landscape has:
 
 - API endpoint (Zinc backend URL)
 - Descope project credentials
-- Feature flags
 
 ## Related
 
