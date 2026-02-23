@@ -116,6 +116,15 @@ const config: ISharedConfig = reg[PUBLIC_LANDSCAPE];
 export { config };
 ```
 
+**Important**: `PUBLIC_LANDSCAPE` is a SvelteKit static environment variable that must be set at **build time**. Valid values are:
+
+- `lapras` — Local development
+- `pichu` — Development environment
+- `pikachu` — Staging environment
+- `raichu` — Production environment
+
+If `PUBLIC_LANDSCAPE` is unset or contains an invalid value, `config` will be `undefined` and will cause runtime errors. Ensure this variable is always set during the build process.
+
 ## Landscapes
 
 | Landscape | Name        | Purpose                |

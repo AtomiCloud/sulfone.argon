@@ -79,14 +79,17 @@ sequenceDiagram
 | -------------- | ------------------------- | ------------------------------------------------------------ |
 | Minimum length | ≥ 1 character             | Username must contain at least 1 character                   |
 | Maximum length | ≤ 256 characters          | Username must be less than 256 characters                    |
-| Full pattern   | `/^[a-z](-?[a-z0-9]+)*$/` | Username must start with a letter and cannot end with dashes |
+| Allowed chars  | `/^[0-9a-zA-Z-]+$/`       | Username must only contain letters, numbers, and dashes      |
+| Final format   | `/^[a-z](-?[a-z0-9]+)*$/` | Username must start with a letter and cannot end with dashes |
 
-The full regex `/^[a-z](-?[a-z0-9]+)*$/` enforces:
+The implementation checks two patterns in sequence:
 
-- Must start with a lowercase letter (`[a-z]`)
-- Can contain lowercase letters, numbers, and single dashes (`-?[a-z0-9]+`)
-- No trailing dash (the pattern requires a letter/digit after any dash)
-- Only lowercase letters (no uppercase)
+1. `/^[0-9a-zA-Z-]+$/` — Permissive check for allowed characters (alphanumeric + dashes)
+2. `/^[a-z](-?[a-z0-9]+)*$/` — Stricter format check that enforces:
+   - Must start with a lowercase letter (`[a-z]`)
+   - Can contain lowercase letters, numbers, and single dashes (`-?[a-z0-9]+`)
+   - No trailing dash (the pattern requires a letter/digit after any dash)
+   - Only lowercase letters (no uppercase)
 
 ## Related
 

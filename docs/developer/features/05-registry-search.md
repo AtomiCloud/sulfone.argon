@@ -82,7 +82,7 @@ sequenceDiagram
 
 All search functions:
 
-- Accept `searchTerm` and `limit` parameters
+- Accept only `searchTerm` parameter (limit is hardcoded to 50)
 - Return arrays of principal responses
 - Set `problem` store on error
 - Track `queue` for loading state
