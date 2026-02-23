@@ -81,4 +81,4 @@ const errorInfo = await response.json();
 
 ## Related
 
-- [Error Handling Feature](../../features/01-authentication.md) - How errors are handled
+- [API Client](../../modules/01-api-client.md) - HTTP client for API calls

@@ -110,7 +110,7 @@ This runs `svelte-check` to verify TypeScript types are correct.
 pls build
 ```
 
-This creates a production build in `.svelte-kit/output/`.
+This creates a production build. With `adapter-cloudflare`, the output goes to `.svelte-kit/cloudflare/`. The `.svelte-kit/` directory contains intermediate build files, while the adapter produces the final deployable artifact.
 
 ## Commands Reference
 
@@ -171,3 +171,4 @@ experimental-features = nix-command flakes
 
 - [Architecture](./02-architecture.md) - System overview
 - [Features](./features/) - What this component does
+- [Modules](./modules/) - Internal module breakdown

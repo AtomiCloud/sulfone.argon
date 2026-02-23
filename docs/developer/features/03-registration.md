@@ -75,13 +75,18 @@ sequenceDiagram
 
 ## Validation Rules
 
-| Rule               | Pattern           | Error Message                                           |
-| ------------------ | ----------------- | ------------------------------------------------------- |
-| Minimum length     | ≥ 1 character     | Username must contain at least 1 character              |
-| Maximum length     | ≤ 256 characters  | Username must be less than 256 characters               |
-| Allowed characters | `^[0-9a-zA-Z-]+$` | Username must only contain letters, numbers, and dashes |
-| Start with letter  | `^[a-z]`          | Username must start with a letter                       |
-| No trailing dash   | `!-$`             | Username cannot end with dashes                         |
+| Rule           | Pattern                   | Error Message                                                |
+| -------------- | ------------------------- | ------------------------------------------------------------ |
+| Minimum length | ≥ 1 character             | Username must contain at least 1 character                   |
+| Maximum length | ≤ 256 characters          | Username must be less than 256 characters                    |
+| Full pattern   | `/^[a-z](-?[a-z0-9]+)*$/` | Username must start with a letter and cannot end with dashes |
+
+The full regex `/^[a-z](-?[a-z0-9]+)*$/` enforces:
+
+- Must start with a lowercase letter (`[a-z]`)
+- Can contain lowercase letters, numbers, and single dashes (`-?[a-z0-9]+`)
+- No trailing dash (the pattern requires a letter/digit after any dash)
+- Only lowercase letters (no uppercase)
 
 ## Related
 

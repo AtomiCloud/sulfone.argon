@@ -21,7 +21,7 @@
 
 ## Structure
 
-```
+```text
 src/store.ts
 ├── problem           # Writable<ProblemDetails | null>
 ├── loading           # Writable<boolean>

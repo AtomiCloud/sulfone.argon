@@ -156,26 +156,34 @@ Each landscape config includes:
 - `domain`: Zinc API domain
 - `scheme`: HTTP or HTTPS
 
-### Auth Configuration (server-only)
+### Auth Configuration (server-only, not in ISharedConfig)
+
+These properties are in `src/config/server/*.ts` only and cannot be accessed from client code:
 
 - `clientId`: Descope project ID
 - `clientSecret`: Descope project secret
 - `secret`: Session encryption secret
 
+**Note**: Attempting to access `config.auth.clientId` from a shared-config import will fail. Use server config imports for auth properties.
+
 ## Usage
 
 ### Import in Client Code
 
+Use the `$config/shared` path alias (configured in `svelte.config.js`):
+
 ```typescript
-import { config } from '$lib/config/shared';
+import { config } from '$config/shared';
 
 const apiUrl = `${config.api.scheme}://${config.api.domain}`;
 ```
 
 ### Import in Server Code
 
+For server-only code that needs auth credentials:
+
 ```typescript
-import { config } from './config/server';
+import { config } from '$config/server';
 
 const descopeIssuer = `https://api.descope.com/${config.auth.clientId}`;
 ```

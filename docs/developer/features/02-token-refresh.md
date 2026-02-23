@@ -35,23 +35,20 @@ flowchart LR
 sequenceDiagram
     participant C as Client
     participant S as store.ts
-    participant H as hooks.server.ts
     participant D as Descope
 
     C->>S: 1. Make API call
     S->>S: 2. Check token expiration
     alt Token expired
-        S->>H: 3. Token expired, clear session
-        H-->>S: 4. Session cleared
-        S->>D: 5. Trigger signIn('descope')
-        D-->>C: 6. OAuth redirect
-        C->>D: 7. Re-authenticate
-        D-->>S: 8. New JWT token
-        S->>S: 9. Store in session
-        S->>C: 10. Retry API call
+        S->>D: 3. Trigger signIn('descope')
+        D-->>C: 4. OAuth redirect
+        C->>D: 5. Re-authenticate
+        D-->>S: 6. New JWT token
+        S->>S: 7. Store in session
+        Note over S,C: 8. User must retry API call manually (page reload)
     else Token valid
-        S->>S: 11. Add Authorization header
-        S-->>C: 12. API response
+        S->>S: 9. Add Authorization header
+        S-->>C: 10. API response
     end
 ```
 
@@ -59,16 +56,14 @@ sequenceDiagram
 | --- | ---------------- | ---------------------------- | --------------------------- | --------------------------- |
 | 1   | API call         | Client makes request         | Access protected resource   | `src/store.ts:38-56`        |
 | 2   | Check expiration | Validate JWT exp claim       | Ensure token is still valid | `src/store.ts:22`           |
-| 3   | Clear session    | Remove expired token         | Prevent use of stale token  | `src/hooks.server.ts:60-66` |
-| 4   | Session cleared  | Token removed from session   | Force re-authentication     | `src/hooks.server.ts:64-65` |
-| 5   | Trigger signIn   | Redirect to Descope          | Get fresh token             | `src/store.ts:43-45`        |
-| 6   | OAuth redirect   | User sees login screen       | Re-authenticate             | `@auth/sveltekit/client`    |
-| 7   | Re-authenticate  | User proves identity         | Get new token               | Descope service             |
-| 8   | New token        | Fresh JWT received           | Update session              | `src/hooks.server.ts:39-58` |
-| 9   | Store session    | Save new token               | Use for future calls        | `src/hooks.server.ts:29-38` |
-| 10  | Retry call       | Execute original request     | Complete user action        | `src/store.ts:38-56`        |
-| 11  | Add header       | Include Authorization header | Authenticated request       | `src/store.ts:46-50`        |
-| 12  | API response     | Return data to caller        | Display result              | `src/lib/api/core/Api.ts`   |
+| 3   | Trigger signIn   | Redirect to Descope          | Get fresh token             | `src/store.ts:43-45`        |
+| 4   | OAuth redirect   | User sees login screen       | Re-authenticate             | `@auth/sveltekit/client`    |
+| 5   | Re-authenticate  | User proves identity         | Get new token               | Descope service             |
+| 6   | New token        | Fresh JWT received           | Update session              | `src/hooks.server.ts:39-58` |
+| 7   | Store session    | Save new token               | Use for future calls        | `src/hooks.server.ts:29-38` |
+| 8   | Manual retry     | User retries original action | Complete user action        | N/A (page reload required)  |
+| 9   | Add header       | Include Authorization header | Authenticated request       | `src/store.ts:46-50`        |
+| 10  | API response     | Return data to caller        | Display result              | `src/lib/api/core/Api.ts`   |
 
 ## Edge Cases
 

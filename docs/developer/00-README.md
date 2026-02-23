@@ -49,6 +49,7 @@ Argon provides a browsable catalog of Templates, Processors, Plugins, and Extens
 
 | Landscape | Name | URL |
 |-----------|------|-----|
+| Local | Lapras | http://localhost:5173 |
 | Development | Pichu | https://pichu.sulfone-argon.pages.dev |
 | Staging | Pikachu | https://pikachu.sulfone-argon.pages.dev |
 | Production | Raichu | https://cyanprint.dev |
