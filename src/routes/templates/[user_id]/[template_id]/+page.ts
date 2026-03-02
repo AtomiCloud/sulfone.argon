@@ -52,48 +52,40 @@ export const load = (async ({
       if (versionDeps[0] === 'ok' && versionDeps[1]) {
         const vd = versionDeps[1];
 
-        // Resolve resolver principals
-        if (vd.resolvers) {
-          for (const resolverVersion of vd.resolvers) {
-            if (resolverVersion.id) {
-              const resolverResp = await toResult(
-                () => api.vResolverVersionsDetail(resolverVersion.id!, '1'),
-                'Fail to get resolver version',
-              ).serial();
-              if (resolverResp[0] === 'ok' && resolverResp[1].resolver) {
-                resolvedDeps.resolvers.push(resolverResp[1].resolver);
-              }
-            }
+        // Collect all fetch promises for parallel execution
+        const resolverPromises = (vd.resolvers ?? [])
+          .filter(r => r.id)
+          .map(r => toResult(() => api.vResolverVersionsDetail(r.id!, '1'), 'Fail to get resolver version').serial());
+
+        const pluginPromises = (vd.plugins ?? [])
+          .filter(p => p.id)
+          .map(p => toResult(() => api.vPluginVersionsDetail(p.id!, '1'), 'Fail to get plugin version').serial());
+
+        const processorPromises = (vd.processors ?? [])
+          .filter(p => p.id)
+          .map(p => toResult(() => api.vProcessorVersionsDetail(p.id!, '1'), 'Fail to get processor version').serial());
+
+        // Execute all fetches in parallel
+        const [resolverResults, pluginResults, processorResults] = await Promise.all([
+          Promise.all(resolverPromises),
+          Promise.all(pluginPromises),
+          Promise.all(processorPromises),
+        ]);
+
+        // Filter out errors and collect principal results
+        for (const result of resolverResults) {
+          if (result[0] === 'ok' && result[1].resolver) {
+            resolvedDeps.resolvers.push(result[1].resolver);
           }
         }
-
-        // Resolve plugin principals
-        if (vd.plugins) {
-          for (const pluginVersion of vd.plugins) {
-            if (pluginVersion.id) {
-              const pluginResp = await toResult(
-                () => api.vPluginVersionsDetail(pluginVersion.id!, '1'),
-                'Fail to get plugin version',
-              ).serial();
-              if (pluginResp[0] === 'ok' && pluginResp[1].plugin) {
-                resolvedDeps.plugins.push(pluginResp[1].plugin);
-              }
-            }
+        for (const result of pluginResults) {
+          if (result[0] === 'ok' && result[1].plugin) {
+            resolvedDeps.plugins.push(result[1].plugin);
           }
         }
-
-        // Resolve processor principals
-        if (vd.processors) {
-          for (const processorVersion of vd.processors) {
-            if (processorVersion.id) {
-              const processorResp = await toResult(
-                () => api.vProcessorVersionsDetail(processorVersion.id!, '1'),
-                'Fail to get processor version',
-              ).serial();
-              if (processorResp[0] === 'ok' && processorResp[1].processor) {
-                resolvedDeps.processors.push(processorResp[1].processor);
-              }
-            }
+        for (const result of processorResults) {
+          if (result[0] === 'ok' && result[1].processor) {
+            resolvedDeps.processors.push(result[1].processor);
           }
         }
       }

@@ -12,20 +12,23 @@
     import * as Card from "$lib/components/ui/card";
     import * as Tabs from "$lib/components/ui/tabs";
     import * as Table from "$lib/components/ui/table";
+    import {toSafeHref} from "$lib/utility";
 
     export let data: PageData;
 
     let problem: ProblemDetails | null = null;
-
+    let loading = true;  // Track initial loading state
 
     $: overview = Res.fromSerial<ResolverResp, ProblemDetails>(data.result)
         .match({
             ok: (a: ResolverResp): ResolverResp | null => {
                 problem = null;
+                loading = false;
                 return a;
             },
             err: (e) => {
                 problem = e;
+                loading = false;
                 return null;
             }
         }) satisfies Promise<ResolverResp | null>;
@@ -45,7 +48,7 @@
     {update(o)}
 {/await}
 
-<Page notFoundMessage="Resolver not found" empty={false} {problem} queue={ov == null ? 1: 0 }>
+<Page notFoundMessage="Resolver not found" empty={false} {problem} queue={loading ? 1 : 0}>
     <div class="w-full min-h-screen bg-muted dark:bg-background">
         <div class="max-w-[1200px] w-11/12 mx-auto py-8 flex-col space-y-8">
             <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
@@ -70,12 +73,12 @@
                     <div class="flex justify-between w-full">
                         <div class="flex space-x-4">
 
-                            <a href="{ov?.principal?.project}"
+                            <a href={toSafeHref(ov?.principal?.project)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Link class="w-4 h-4"/>
                                 <div> Project</div>
                             </a>
-                            <a href="{ov?.principal?.source}"
+                            <a href={toSafeHref(ov?.principal?.source)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Code2 class="w-4 h-4"/>
                                 <div> Source</div>

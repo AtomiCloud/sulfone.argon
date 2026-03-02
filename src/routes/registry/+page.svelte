@@ -61,7 +61,10 @@
             Limit: 50,
         }), "Failed to search template");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -78,7 +81,10 @@
             Limit: 50,
         }), "Failed to search plugin");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -95,7 +101,10 @@
             Limit: 50,
         }), "Failed to search processor");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -112,7 +121,10 @@
             Limit: 50,
         }), "Failed to search resolver");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
