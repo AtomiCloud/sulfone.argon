@@ -144,7 +144,7 @@
                                 <Table.Body>
                                     {#each (ov?.versions ?? [])
                                         .filter((i) => i?.description?.includes(searchTerm) ?? true)
-                                        .sort((a,b) => (b?.version ?? 0) - (a?.version ?? 0)) as version, i (i)}
+                                        .sort((a,b) => (b?.version ?? 0) - (a?.version ?? 0)) as version (version.version)}
                                         <Table.Row>
                                             <Table.Cell class="font-medium">{version.version}</Table.Cell>
                                             <Table.Cell>{version.description}</Table.Cell>

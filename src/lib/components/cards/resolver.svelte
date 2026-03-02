@@ -32,8 +32,8 @@
                     <p class="text-foreground text-sm font-semibold">{resolver.email}</p>
                 </div>
                 <div class="flex space-x-4">
-                    <a href={toSafeHref(resolver.project)} class="hover:text-primary on:click|stopPropagation z-10" aria-label="Project link"><Link class="w-4 h-4"/></a>
-                    <a href={toSafeHref(resolver.source)} class="hover:text-primary on:click|stopPropagation z-10" aria-label="Source link"><Code2 class="w-4 h-4" /></a>
+                    <a href={toSafeHref(resolver.project)} class="hover:text-primary z-10" aria-label="Project link" on:click|stopPropagation><Link class="w-4 h-4"/></a>
+                    <a href={toSafeHref(resolver.source)} class="hover:text-primary z-10" aria-label="Source link" on:click|stopPropagation><Code2 class="w-4 h-4" /></a>
                 </div>
             </div>
         </Card.Footer>
