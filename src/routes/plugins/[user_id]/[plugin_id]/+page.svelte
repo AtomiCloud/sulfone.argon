@@ -12,6 +12,7 @@
     import * as Card from "$lib/components/ui/card";
     import * as Tabs from "$lib/components/ui/tabs";
     import * as Table from "$lib/components/ui/table";
+    import {toSafeHref} from "$lib/utility";
 
     export let data: PageData;
 
@@ -70,12 +71,12 @@
                     <div class="flex justify-between w-full">
                         <div class="flex space-x-4">
 
-                            <a href="{ov?.principal?.project}"
+                            <a href={toSafeHref(ov?.principal?.project)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Link class="w-4 h-4"/>
                                 <div> Project</div>
                             </a>
-                            <a href="{ov?.principal?.source}"
+                            <a href={toSafeHref(ov?.principal?.source)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Code2 class="w-4 h-4"/>
                                 <div> Source</div>
