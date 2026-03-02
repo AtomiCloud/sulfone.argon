@@ -41,6 +41,22 @@ export interface CreateProcessorVersionReq {
   dockerTag?: string | null;
 }
 
+export interface CreateResolverReq {
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+}
+
+export interface CreateResolverVersionReq {
+  description?: string | null;
+  dockerReference?: string | null;
+  dockerTag?: string | null;
+}
+
 export interface CreateTemplateReq {
   name?: string | null;
   project?: string | null;
@@ -53,12 +69,11 @@ export interface CreateTemplateReq {
 
 export interface CreateTemplateVersionReq {
   description?: string | null;
-  blobDockerReference?: string | null;
-  blobDockerTag?: string | null;
-  templateDockerReference?: string | null;
-  templateDockerTag?: string | null;
+  properties?: TemplatePropertyReq;
   plugins?: PluginReferenceReq[] | null;
   processors?: ProcessorReferenceReq[] | null;
+  templates?: TemplateReferenceReq[] | null;
+  resolvers?: ResolverReferenceReq[] | null;
 }
 
 export interface CreateTokenReq {
@@ -208,6 +223,19 @@ export interface PushProcessorReq {
   dockerTag?: string | null;
 }
 
+export interface PushResolverReq {
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+  versionDescription?: string | null;
+  dockerReference?: string | null;
+  dockerTag?: string | null;
+}
+
 export interface PushTemplateReq {
   name?: string | null;
   project?: string | null;
@@ -217,12 +245,64 @@ export interface PushTemplateReq {
   description?: string | null;
   readme?: string | null;
   versionDescription?: string | null;
-  blobDockerReference?: string | null;
-  blobDockerTag?: string | null;
-  templateDockerReference?: string | null;
-  templateDockerTag?: string | null;
+  properties?: TemplatePropertyReq;
   plugins?: PluginReferenceReq[] | null;
   processors?: ProcessorReferenceReq[] | null;
+  templates?: TemplateReferenceReq[] | null;
+  resolvers?: ResolverReferenceReq[] | null;
+}
+
+export interface ResolverInfoResp {
+  /** @format int32 */
+  downloads?: number;
+  /** @format int32 */
+  dependencies?: number;
+  /** @format int32 */
+  stars?: number;
+}
+
+export interface ResolverPrincipalResp {
+  /** @format uuid */
+  id?: string;
+  name?: string | null;
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+  userId?: string | null;
+}
+
+export interface ResolverReferenceReq {
+  username?: string | null;
+  name?: string | null;
+  /** @format int32 */
+  version?: number;
+}
+
+export interface ResolverResp {
+  principal?: ResolverPrincipalResp;
+  info?: ResolverInfoResp;
+  user?: UserPrincipalResp;
+  versions?: ResolverVersionPrincipalResp[] | null;
+}
+
+export interface ResolverVersionPrincipalResp {
+  /** @format uuid */
+  id?: string;
+  /** @format int64 */
+  version?: number;
+  /** @format date-time */
+  createdAt?: string;
+  description?: string | null;
+  dockerReference?: string | null;
+  dockerTag?: string | null;
+}
+
+export interface ResolverVersionResp {
+  principal?: ResolverVersionPrincipalResp;
+  resolver?: ResolverPrincipalResp;
 }
 
 export interface TemplateInfoResp {
@@ -245,6 +325,27 @@ export interface TemplatePrincipalResp {
   userId?: string | null;
 }
 
+export interface TemplatePropertyReq {
+  blobDockerReference?: string | null;
+  blobDockerTag?: string | null;
+  templateDockerReference?: string | null;
+  templateDockerTag?: string | null;
+}
+
+export interface TemplatePropertyResp {
+  blobDockerReference?: string | null;
+  blobDockerTag?: string | null;
+  templateDockerReference?: string | null;
+  templateDockerTag?: string | null;
+}
+
+export interface TemplateReferenceReq {
+  username?: string | null;
+  name?: string | null;
+  /** @format int32 */
+  version?: number;
+}
+
 export interface TemplateResp {
   principal?: TemplatePrincipalResp;
   info?: TemplateInfoResp;
@@ -260,10 +361,7 @@ export interface TemplateVersionPrincipalResp {
   /** @format date-time */
   createdAt?: string;
   description?: string | null;
-  blobDockerReference?: string | null;
-  blobDockerTag?: string | null;
-  templateDockerReference?: string | null;
-  templateDockerTag?: string | null;
+  properties?: TemplatePropertyResp;
 }
 
 export interface TemplateVersionResp {
@@ -271,6 +369,8 @@ export interface TemplateVersionResp {
   template?: TemplatePrincipalResp;
   plugins?: PluginVersionPrincipalResp[] | null;
   processors?: ProcessorVersionPrincipalResp[] | null;
+  templates?: TemplateVersionPrincipalResp[] | null;
+  resolvers?: ResolverVersionPrincipalResp[] | null;
 }
 
 export interface TokenOTPrincipalResp {
@@ -311,6 +411,19 @@ export interface UpdateProcessorReq {
 }
 
 export interface UpdateProcessorVersionReq {
+  description?: string | null;
+}
+
+export interface UpdateResolverReq {
+  project?: string | null;
+  source?: string | null;
+  email?: string | null;
+  tags?: string[] | null;
+  description?: string | null;
+  readme?: string | null;
+}
+
+export interface UpdateResolverVersionReq {
   description?: string | null;
 }
 

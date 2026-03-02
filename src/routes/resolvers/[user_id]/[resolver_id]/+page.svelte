@@ -1,15 +1,14 @@
 <script lang="ts">
-    import type {TemplateResp} from "$lib/api/core/data-contracts";
-    import type {ResolvedDependencies} from './+page';
+    import type {ResolverResp} from "$lib/api/core/data-contracts";
     import {Res} from "$lib/core/result";
     import type {PageData} from './$types';
     import type {ProblemDetails} from "../../../../errors/problem_details";
     import Page from "$lib/components/complex/page.svelte";
     import {Badge} from "$lib/components/ui/badge";
-    import {Code2, Download, Link, Star} from "lucide-svelte";
+    import {Code2, Download, Link, Star, Workflow} from "lucide-svelte";
     import {Input} from "$lib/components/ui/input";
     import {Button} from "$lib/components/ui/button";
-    import SvelteMarkdown from 'svelte-markdown'
+    import SvelteMarkdown from 'svelte-markdown';
     import * as Card from "$lib/components/ui/card";
     import * as Tabs from "$lib/components/ui/tabs";
     import * as Table from "$lib/components/ui/table";
@@ -19,9 +18,9 @@
     let problem: ProblemDetails | null = null;
 
 
-    $: overview = Res.fromSerial<TemplateResp, ProblemDetails>(data.result)
+    $: overview = Res.fromSerial<ResolverResp, ProblemDetails>(data.result)
         .match({
-            ok: (a: TemplateResp): TemplateResp | null => {
+            ok: (a: ResolverResp): ResolverResp | null => {
                 problem = null;
                 return a;
             },
@@ -29,20 +28,14 @@
                 problem = e;
                 return null;
             }
-        }) satisfies Promise<TemplateResp | null>;
+        }) satisfies Promise<ResolverResp | null>;
 
-    let ov: TemplateResp | null = null;
-    let rd: ResolvedDependencies = { resolvers: [], plugins: [], processors: [] };
+    let ov: ResolverResp | null = null;
 
     let searchTerm = "";
 
-    function update(over: TemplateResp | null): string {
+    function update(over: ResolverResp | null): string {
         ov = over;
-        return "";
-    }
-
-    function updateResolvedDeps(r: ResolvedDependencies): string {
-        rd = r;
         return "";
     }
 
@@ -52,11 +45,7 @@
     {update(o)}
 {/await}
 
-{#await Promise.resolve(data.resolvedDeps) then r}
-    {updateResolvedDeps(r)}
-{/await}
-
-<Page notFoundMessage="Template not found" empty={false} {problem} queue={ov == null ? 1: 0 }>
+<Page notFoundMessage="Resolver not found" empty={false} {problem} queue={ov == null ? 1: 0 }>
     <div class="w-full min-h-screen bg-muted dark:bg-background">
         <div class="max-w-[1200px] w-11/12 mx-auto py-8 flex-col space-y-8">
             <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
@@ -101,16 +90,19 @@
                                 <Download class="w-4 h-4"/>
                                 <div>{ov?.info?.downloads}</div>
                             </Button>
+                            <Button class="flex space-x-2 items-center">
+                                <Workflow class="w-4 h-4"/>
+                                <div>{ov?.info?.dependencies}</div>
+                            </Button>
                         </div>
                     </div>
                 </Card.Footer>
             </Card.Root>
 
             <Tabs.Root value="docs">
-                <Tabs.List class="grid w-full grid-cols-3 shadow-xl">
+                <Tabs.List class="grid w-full grid-cols-2 shadow-xl">
                     <Tabs.Trigger value="docs">Documentation</Tabs.Trigger>
                     <Tabs.Trigger value="version">Versions</Tabs.Trigger>
-                    <Tabs.Trigger value="dependencies">Dependencies</Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="docs">
                     <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
@@ -129,7 +121,7 @@
                         <Card.Header>
                             <Card.Title>Versions</Card.Title>
                             <Card.Description>
-                                Current and past versions of the template.
+                                Current and past versions of the resolver.
                             </Card.Description>
                         </Card.Header>
                         <Card.Content class="space-y-2">
@@ -160,69 +152,8 @@
                         </Card.Footer>
                     </Card.Root>
                 </Tabs.Content>
-                <Tabs.Content value="dependencies">
-                    <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
-                        <Card.Header>
-                            <Card.Title>Dependencies</Card.Title>
-                            <Card.Description>
-                                Resolvers, plugins, and processors used by this template.
-                            </Card.Description>
-                        </Card.Header>
-                        <Card.Content class="space-y-4">
-                            {#if !rd.resolvers.length && !rd.plugins.length && !rd.processors.length}
-                                <p class="text-muted-foreground">No dependencies found for the latest version.</p>
-                            {:else}
-                                {#if rd.resolvers.length > 0}
-                                    <div>
-                                        <h4 class="font-semibold mb-2">Resolvers</h4>
-                                        <ul class="list-disc list-inside space-y-1">
-                                            {#each rd.resolvers as resolver}
-                                                <li>
-                                                    <a href="/resolvers/{resolver.userId}/{resolver.id}" class="text-primary underline">
-                                                        {resolver.name ?? 'Unnamed Resolver'}
-                                                    </a>
-                                                </li>
-                                            {/each}
-                                        </ul>
-                                    </div>
-                                {/if}
-                                {#if rd.plugins.length > 0}
-                                    <div>
-                                        <h4 class="font-semibold mb-2">Plugins</h4>
-                                        <ul class="list-disc list-inside space-y-1">
-                                            {#each rd.plugins as plugin}
-                                                <li>
-                                                    <a href="/plugins/{plugin.userId}/{plugin.id}" class="text-primary underline">
-                                                        {plugin.name ?? 'Unnamed Plugin'}
-                                                    </a>
-                                                </li>
-                                            {/each}
-                                        </ul>
-                                    </div>
-                                {/if}
-                                {#if rd.processors.length > 0}
-                                    <div>
-                                        <h4 class="font-semibold mb-2">Processors</h4>
-                                        <ul class="list-disc list-inside space-y-1">
-                                            {#each rd.processors as processor}
-                                                <li>
-                                                    <a href="/processors/{processor.userId}/{processor.id}" class="text-primary underline">
-                                                        {processor.name ?? 'Unnamed Processor'}
-                                                    </a>
-                                                </li>
-                                            {/each}
-                                        </ul>
-                                    </div>
-                                {/if}
-                            {/if}
-                        </Card.Content>
-                        <Card.Footer>
-                        </Card.Footer>
-                    </Card.Root>
-                </Tabs.Content>
             </Tabs.Root>
 
         </div>
     </div>
 </Page>
-
