@@ -64,7 +64,10 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <Card.Header>
-                            <Card.Title class="text-3xl">{ov?.user?.username}/{ov?.principal?.name}</Card.Title>
+                            <div class="flex items-center gap-3">
+                                <Card.Title class="text-3xl">{ov?.user?.username}/{ov?.principal?.name}</Card.Title>
+                                <Badge variant="outline" class="text-sky-600 border-sky-600">Template</Badge>
+                            </div>
                         </Card.Header>
                         <Card.Content>
                             <Card.Description>
