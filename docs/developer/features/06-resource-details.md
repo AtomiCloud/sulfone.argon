@@ -15,7 +15,7 @@
 
 ## Overview
 
-Resource detail pages display comprehensive information about a specific Template, Plugin, or Processor. Each page shows metadata (name, description, tags, author), statistics (stars, downloads), links (project homepage, source code), documentation (README), and version history.
+Resource detail pages display comprehensive information about a specific Template, Plugin, Processor, or Resolver. Each page shows metadata (name, description, tags, author), statistics (stars, downloads), links (project homepage, source code), documentation (README), and version history.
 
 ## Flow
 
@@ -106,6 +106,7 @@ Each detail page has the following sections:
 | Template  | `/templates/[user_id]/[template_id]`   | `+page.ts` → `vTemplateUserTemplateDetail()`   | `+page.svelte` |
 | Plugin    | `/plugins/[user_id]/[plugin_id]`       | `+page.ts` → `vPluginUserPluginDetail()`       | `+page.svelte` |
 | Processor | `/processors/[user_id]/[processor_id]` | `+page.ts` → `vProcessorUserProcessorDetail()` | `+page.svelte` |
+| Resolver  | `/resolvers/[user_id]/[resolver_id]`   | `+page.ts` → `vResolverIdDetail()`             | `+page.svelte` |
 
 ## Edge Cases
 

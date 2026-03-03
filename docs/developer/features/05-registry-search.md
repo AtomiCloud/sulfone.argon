@@ -1,19 +1,20 @@
 # Registry Search
 
-**What**: Multi-resource search for Templates, Plugins, and Processors with real-time filtering.
+**What**: Multi-resource search for Templates, Plugins, Processors, and Resolvers with real-time filtering.
 
 **Why**: Users need to discover and inspect artifacts before using them.
 
 **Key Files**:
 
-- `src/routes/registry/+page.svelte` → `searchTemplate()`, `searchPlugin()`, `searchProcessor()` functions and reactive search
+- `src/routes/registry/+page.svelte` → `searchTemplate()`, `searchPlugin()`, `searchProcessor()`, `searchResolver()` functions and reactive search
 - `src/lib/components/cards/template.svelte` → Template card component
 - `src/lib/components/cards/plugin.svelte` → Plugin card component
 - `src/lib/components/cards/processor.svelte` → Processor card component
+- `src/lib/components/cards/resolver.svelte` → Resolver card component
 
 ## Overview
 
-The registry search page allows users to discover Templates, Plugins, and Processors in the CyanPrint registry. Users can select a resource type, enter a search query, and see results displayed in a grid of cards. Each card shows summary information and links to the detail page.
+The registry search page allows users to discover Templates, Plugins, Processors, and Resolvers in the CyanPrint registry. Users can select a resource type, enter a search query, and see results displayed in a grid of cards. Each card shows summary information and links to the detail page.
 
 ## Flow
 
@@ -79,6 +80,7 @@ sequenceDiagram
 | `searchTemplate()`  | Templates     | `vTemplateDetail()`  |
 | `searchPlugin()`    | Plugins       | `vPluginDetail()`    |
 | `searchProcessor()` | Processors    | `vProcessorDetail()` |
+| `searchResolver()`  | Resolvers     | `vResolverDetail()`  |
 
 All search functions:
 

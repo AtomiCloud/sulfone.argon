@@ -31,7 +31,8 @@ src/lib/components/
 ├── cards/            # Domain-specific resource cards
 │   ├── template.svelte
 │   ├── plugin.svelte
-│   └── processor.svelte
+│   ├── processor.svelte
+│   └── resolver.svelte
 ├── complex/          # Composed components
 │   ├── page.svelte
 │   ├── error.svelte
@@ -103,6 +104,7 @@ Domain-specific components for displaying registry resources.
 | Template  | Template summary card  | `src/lib/components/cards/template.svelte`  |
 | Plugin    | Plugin summary card    | `src/lib/components/cards/plugin.svelte`    |
 | Processor | Processor summary card | `src/lib/components/cards/processor.svelte` |
+| Resolver  | Resolver summary card  | `src/lib/components/cards/resolver.svelte`  |
 
 Each card displays:
 

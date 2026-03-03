@@ -21,3 +21,4 @@ Features in Argon are organized by the user-facing capabilities they provide. Ea
 | Registry Search | Search templates, plugins, and processors | [05-registry-search.md](./05-registry-search.md) |
 | Resource Details | Detail pages for templates, plugins, processors | [06-resource-details.md](./06-resource-details.md) |
 | Dark Mode | Theme switching with OS preference detection | [07-dark-mode.md](./07-dark-mode.md) |
+| Resolver UI | Browse, view, and manage resolvers in the registry | [08-resolver-ui.md](./08-resolver-ui.md) |
