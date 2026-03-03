@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type {ProcessorResp} from "$lib/api/core/data-contracts";
+    import type {ResolverResp} from "$lib/api/core/data-contracts";
     import {Res} from "$lib/core/result";
     import type {PageData} from './$types';
     import type {ProblemDetails} from "../../../../errors/problem_details";
@@ -8,7 +8,7 @@
     import {Code2, Download, Link, Star, Workflow} from "lucide-svelte";
     import {Input} from "$lib/components/ui/input";
     import {Button} from "$lib/components/ui/button";
-    import SvelteMarkdown from 'svelte-markdown'
+    import SvelteMarkdown from 'svelte-markdown';
     import * as Card from "$lib/components/ui/card";
     import * as Tabs from "$lib/components/ui/tabs";
     import * as Table from "$lib/components/ui/table";
@@ -17,25 +17,27 @@
     export let data: PageData;
 
     let problem: ProblemDetails | null = null;
+    let loading = true;  // Track initial loading state
 
-
-    $: overview = Res.fromSerial<ProcessorResp, ProblemDetails>(data.result)
+    $: overview = Res.fromSerial<ResolverResp, ProblemDetails>(data.result)
         .match({
-            ok: (a: ProcessorResp): ProcessorResp | null => {
+            ok: (a: ResolverResp): ResolverResp | null => {
                 problem = null;
+                loading = false;
                 return a;
             },
             err: (e) => {
                 problem = e;
+                loading = false;
                 return null;
             }
-        }) satisfies Promise<ProcessorResp | null>;
+        }) satisfies Promise<ResolverResp | null>;
 
-    let ov: ProcessorResp | null = null;
+    let ov: ResolverResp | null = null;
 
     let searchTerm = "";
 
-    function update(over: ProcessorResp | null): string {
+    function update(over: ResolverResp | null): string {
         ov = over;
         return "";
     }
@@ -46,7 +48,7 @@
     {update(o)}
 {/await}
 
-<Page notFoundMessage="Processor not found" empty={false} {problem} queue={ov == null ? 1: 0 }>
+<Page notFoundMessage="Resolver not found" empty={false} {problem} queue={loading ? 1 : 0}>
     <div class="w-full min-h-screen bg-muted dark:bg-background">
         <div class="max-w-[1200px] w-11/12 mx-auto py-8 flex-col space-y-8">
             <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
@@ -55,7 +57,7 @@
                         <Card.Header>
                             <div class="flex items-center gap-3">
                                 <Card.Title class="text-3xl">{ov?.user?.username}/{ov?.principal?.name}</Card.Title>
-                                <Badge variant="outline" class="text-pink-600 border-pink-600">Processor</Badge>
+                                <Badge variant="outline" class="text-amber-600 border-amber-600">Resolver</Badge>
                             </div>
                         </Card.Header>
                         <Card.Content>
@@ -125,7 +127,7 @@
                         <Card.Header>
                             <Card.Title>Versions</Card.Title>
                             <Card.Description>
-                                Current and past versions of the processor.
+                                Current and past versions of the resolver.
                             </Card.Description>
                         </Card.Header>
                         <Card.Content class="space-y-2">
@@ -142,7 +144,7 @@
                                 <Table.Body>
                                     {#each (ov?.versions ?? [])
                                         .filter((i) => i?.description?.includes(searchTerm) ?? true)
-                                        .sort((a,b) => (b?.version ?? 0) - (a?.version ?? 0)) as version, i (i)}
+                                        .sort((a,b) => (b?.version ?? 0) - (a?.version ?? 0)) as version (version.version)}
                                         <Table.Row>
                                             <Table.Cell class="font-medium">{version.version}</Table.Cell>
                                             <Table.Cell>{version.description}</Table.Cell>
@@ -161,4 +163,3 @@
         </div>
     </div>
 </Page>
-

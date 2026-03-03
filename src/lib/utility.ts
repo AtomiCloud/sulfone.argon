@@ -119,6 +119,20 @@ function compare(a?: string | null, b?: string | null): boolean {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
+/**
+ * Validates a URL string to ensure it uses a safe scheme (http or https).
+ * Returns the validated URL string, or undefined if invalid/unsafe.
+ */
+function toSafeHref(value?: string | null): string | undefined {
+  if (!value) return undefined;
+  try {
+    const u = new URL(value);
+    return u.protocol === 'http:' || u.protocol === 'https:' ? u.toString() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export {
   noop,
   compare,
@@ -133,4 +147,5 @@ export {
   isProblem,
   isResponse,
   parseError,
+  toSafeHref,
 };

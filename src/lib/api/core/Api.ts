@@ -14,6 +14,8 @@ import type {
   CreatePluginVersionReq,
   CreateProcessorReq,
   CreateProcessorVersionReq,
+  CreateResolverReq,
+  CreateResolverVersionReq,
   CreateTemplateReq,
   CreateTemplateVersionReq,
   CreateTokenReq,
@@ -29,7 +31,12 @@ import type {
   ProcessorVersionResp,
   PushPluginReq,
   PushProcessorReq,
+  PushResolverReq,
   PushTemplateReq,
+  ResolverPrincipalResp,
+  ResolverResp,
+  ResolverVersionPrincipalResp,
+  ResolverVersionResp,
   TemplatePrincipalResp,
   TemplateResp,
   TemplateVersionPrincipalResp,
@@ -41,6 +48,8 @@ import type {
   UpdatePluginVersionReq,
   UpdateProcessorReq,
   UpdateProcessorVersionReq,
+  UpdateResolverReq,
+  UpdateResolverVersionReq,
   UpdateTemplateReq,
   UpdateTemplateVersionReq,
   UpdateTokenReq,
@@ -422,6 +431,22 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
+   * @tags Plugin
+   * @name VPluginVersionsDetail
+   * @request GET:/api/v{version}/Plugin/versions/{versionId}
+   * @secure
+   */
+  vPluginVersionsDetail = (versionId: string, version: string, params: RequestParams = {}) =>
+    this.request<PluginVersionResp, any>({
+      path: `/api/v${version}/Plugin/versions/${versionId}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
    * @tags Processor
    * @name VProcessorDetail
    * @request GET:/api/v{version}/Processor
@@ -789,6 +814,405 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
   /**
    * No description
    *
+   * @tags Processor
+   * @name VProcessorVersionsDetail
+   * @request GET:/api/v{version}/Processor/versions/{versionId}
+   * @secure
+   */
+  vProcessorVersionsDetail = (versionId: string, version: string, params: RequestParams = {}) =>
+    this.request<ProcessorVersionResp, any>({
+      path: `/api/v${version}/Processor/versions/${versionId}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverDetail
+   * @request GET:/api/v{version}/Resolver
+   * @secure
+   */
+  vResolverDetail = (
+    version: string,
+    query?: {
+      Owner?: string;
+      Search?: string;
+      /** @format int32 */
+      Limit?: number;
+      /** @format int32 */
+      Skip?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverPrincipalResp[], any>({
+      path: `/api/v${version}/Resolver`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdDetail
+   * @request GET:/api/v{version}/Resolver/id/{userId}/{resolverId}
+   * @secure
+   */
+  vResolverIdDetail = (userId: string, resolverId: string, version: string, params: RequestParams = {}) =>
+    this.request<ResolverResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdUpdate
+   * @request PUT:/api/v{version}/Resolver/id/{userId}/{resolverId}
+   * @secure
+   */
+  vResolverIdUpdate = (
+    userId: string,
+    resolverId: string,
+    version: string,
+    data: UpdateResolverReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdDelete
+   * @request DELETE:/api/v{version}/Resolver/id/{userId}/{resolverId}
+   * @secure
+   */
+  vResolverIdDelete = (userId: string, resolverId: string, version: string, params: RequestParams = {}) =>
+    this.request<Unit, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}`,
+      method: 'DELETE',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugDetail
+   * @request GET:/api/v{version}/Resolver/slug/{username}/{name}
+   * @secure
+   */
+  vResolverSlugDetail = (username: string, name: string, version: string, params: RequestParams = {}) =>
+    this.request<ResolverResp, any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${name}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdCreate
+   * @request POST:/api/v{version}/Resolver/id/{userId}
+   * @secure
+   */
+  vResolverIdCreate = (userId: string, version: string, data: CreateResolverReq, params: RequestParams = {}) =>
+    this.request<ResolverPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugLikeCreate
+   * @request POST:/api/v{version}/Resolver/slug/{username}/{resolverName}/like/{likerId}/{like}
+   * @secure
+   */
+  vResolverSlugLikeCreate = (
+    username: string,
+    resolverName: string,
+    likerId: string,
+    like: boolean,
+    version: string,
+    params: RequestParams = {},
+  ) =>
+    this.request<Unit, any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${resolverName}/like/${likerId}/${like}`,
+      method: 'POST',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugVersionsDetail
+   * @request GET:/api/v{version}/Resolver/slug/{username}/{resolverName}/versions
+   * @secure
+   */
+  vResolverSlugVersionsDetail = (
+    username: string,
+    resolverName: string,
+    version: string,
+    query?: {
+      Search?: string;
+      /** @format int32 */
+      Limit?: number;
+      /** @format int32 */
+      Skip?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionPrincipalResp[], any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${resolverName}/versions`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugVersionsCreate
+   * @request POST:/api/v{version}/Resolver/slug/{username}/{resolverName}/versions
+   * @secure
+   */
+  vResolverSlugVersionsCreate = (
+    username: string,
+    resolverName: string,
+    version: string,
+    data: CreateResolverVersionReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${resolverName}/versions`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdVersionsDetail
+   * @request GET:/api/v{version}/Resolver/id/{userId}/{resolverId}/versions
+   * @secure
+   */
+  vResolverIdVersionsDetail = (
+    userId: string,
+    resolverId: string,
+    version: string,
+    query?: {
+      Search?: string;
+      /** @format int32 */
+      Limit?: number;
+      /** @format int32 */
+      Skip?: number;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionPrincipalResp[], any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}/versions`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdVersionsCreate
+   * @request POST:/api/v{version}/Resolver/id/{userId}/{resolverId}/versions
+   * @secure
+   */
+  vResolverIdVersionsCreate = (
+    userId: string,
+    resolverId: string,
+    version: string,
+    data: CreateResolverVersionReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}/versions`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugVersionsDetail2
+   * @request GET:/api/v{version}/Resolver/slug/{username}/{resolverName}/versions/{ver}
+   * @originalName vResolverSlugVersionsDetail
+   * @duplicate
+   * @secure
+   */
+  vResolverSlugVersionsDetail2 = (
+    username: string,
+    resolverName: string,
+    ver: number,
+    version: string,
+    query?: {
+      bumpDownload?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionResp, any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${resolverName}/versions/${ver}`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverSlugVersionsLatestDetail
+   * @request GET:/api/v{version}/Resolver/slug/{username}/{resolverName}/versions/latest
+   * @secure
+   */
+  vResolverSlugVersionsLatestDetail = (
+    username: string,
+    resolverName: string,
+    version: string,
+    query?: {
+      bumpDownload?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionResp, any>({
+      path: `/api/v${version}/Resolver/slug/${username}/${resolverName}/versions/latest`,
+      method: 'GET',
+      query: query,
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdVersionsDetail2
+   * @request GET:/api/v{version}/Resolver/id/{userId}/{resolverId}/versions/{ver}
+   * @originalName vResolverIdVersionsDetail
+   * @duplicate
+   * @secure
+   */
+  vResolverIdVersionsDetail2 = (
+    userId: string,
+    resolverId: string,
+    ver: number,
+    version: string,
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}/versions/${ver}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverIdVersionsUpdate
+   * @request PUT:/api/v{version}/Resolver/id/{userId}/{resolverId}/versions/{ver}
+   * @secure
+   */
+  vResolverIdVersionsUpdate = (
+    userId: string,
+    resolverId: string,
+    ver: number,
+    version: string,
+    data: UpdateResolverVersionReq,
+    params: RequestParams = {},
+  ) =>
+    this.request<ResolverVersionPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/id/${userId}/${resolverId}/versions/${ver}`,
+      method: 'PUT',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverPushCreate
+   * @request POST:/api/v{version}/Resolver/push/{username}
+   * @secure
+   */
+  vResolverPushCreate = (username: string, version: string, data: PushResolverReq, params: RequestParams = {}) =>
+    this.request<ResolverVersionPrincipalResp, any>({
+      path: `/api/v${version}/Resolver/push/${username}`,
+      method: 'POST',
+      body: data,
+      secure: true,
+      type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Resolver
+   * @name VResolverVersionsDetail
+   * @request GET:/api/v{version}/Resolver/versions/{versionId}
+   * @secure
+   */
+  vResolverVersionsDetail = (versionId: string, version: string, params: RequestParams = {}) =>
+    this.request<ResolverVersionResp, any>({
+      path: `/api/v${version}/Resolver/versions/${versionId}`,
+      method: 'GET',
+      secure: true,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
    * @tags Template
    * @name VTemplateDetail
    * @request GET:/api/v{version}/Template
@@ -1150,6 +1574,22 @@ export class Api<SecurityDataType = unknown> extends HttpClient<SecurityDataType
       body: data,
       secure: true,
       type: ContentType.Json,
+      format: 'json',
+      ...params,
+    });
+  /**
+   * No description
+   *
+   * @tags Template
+   * @name VTemplateVersionsDetail
+   * @request GET:/api/v{version}/Template/versions/{versionId}
+   * @secure
+   */
+  vTemplateVersionsDetail = (versionId: string, version: string, params: RequestParams = {}) =>
+    this.request<TemplateVersionResp, any>({
+      path: `/api/v${version}/Template/versions/${versionId}`,
+      method: 'GET',
+      secure: true,
       format: 'json',
       ...params,
     });
