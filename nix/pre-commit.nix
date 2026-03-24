@@ -1,4 +1,8 @@
-{ packages, formatter, pre-commit-lib }:
+{ packages
+, formatter
+, pre-commit-lib
+,
+}:
 pre-commit-lib.run {
   src = ./.;
 
@@ -41,9 +45,9 @@ pre-commit-lib.run {
       enable = true;
       name = "Gitlint";
       description = "Lints git commit message";
-      entry = "${packages.gitlint}/bin/gitlint --staged --msg-filename .git/COMMIT_EDITMSG";
+      entry = "${packages.gitlint}/bin/gitlint --staged --msg-filename";
       language = "system";
-      pass_filenames = false;
+      pass_filenames = true;
       stages = [ "commit-msg" ];
     };
 
@@ -69,7 +73,7 @@ pre-commit-lib.run {
     a-enforce-exec = {
       enable = true;
       name = "Enforce Shell Script executable";
-      entry = "${packages.coreutils}/bin/chmod +x";
+      entry = "${packages.atomiutils}/bin/chmod +x";
       files = ".*sh$";
       language = "system";
       pass_filenames = true;

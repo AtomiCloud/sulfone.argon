@@ -3,6 +3,7 @@
     import type {PluginPrincipalResp} from "$lib/api/core/data-contracts";
     import {Badge} from "$lib/components/ui/badge";
     import {Link, Code2} from "lucide-svelte";
+    import {toSafeHref} from "$lib/utility";
 
     export let plugin: PluginPrincipalResp;
 </script>
@@ -28,8 +29,8 @@
                     <p class="text-foreground text-sm font-semibold">{plugin.email}</p>
                 </div>
                 <div class="flex space-x-4">
-                    <a href="{plugin.project}" class="hover:text-primary"><Link class="w-4 h-4"/></a>
-                    <a href="{plugin.source}" class="hover:text-primary"><Code2 class="w-4 h-4" /></a>
+                    <a href={toSafeHref(plugin.project)} class="hover:text-primary" on:click|stopPropagation><Link class="w-4 h-4"/></a>
+                    <a href={toSafeHref(plugin.source)} class="hover:text-primary" on:click|stopPropagation><Code2 class="w-4 h-4" /></a>
                 </div>
             </div>
         </Card.Footer>

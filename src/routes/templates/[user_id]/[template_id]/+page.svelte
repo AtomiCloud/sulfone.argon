@@ -1,5 +1,6 @@
 <script lang="ts">
     import type {TemplateResp} from "$lib/api/core/data-contracts";
+    import type {ResolvedDependencies} from './+page';
     import {Res} from "$lib/core/result";
     import type {PageData} from './$types';
     import type {ProblemDetails} from "../../../../errors/problem_details";
@@ -12,6 +13,7 @@
     import * as Card from "$lib/components/ui/card";
     import * as Tabs from "$lib/components/ui/tabs";
     import * as Table from "$lib/components/ui/table";
+    import {toSafeHref} from "$lib/utility";
 
     export let data: PageData;
 
@@ -31,11 +33,17 @@
         }) satisfies Promise<TemplateResp | null>;
 
     let ov: TemplateResp | null = null;
+    let rd: ResolvedDependencies = { resolvers: [], plugins: [], processors: [] };
 
     let searchTerm = "";
 
     function update(over: TemplateResp | null): string {
         ov = over;
+        return "";
+    }
+
+    function updateResolvedDeps(r: ResolvedDependencies): string {
+        rd = r;
         return "";
     }
 
@@ -45,6 +53,10 @@
     {update(o)}
 {/await}
 
+{#await Promise.resolve(data.resolvedDeps) then r}
+    {updateResolvedDeps(r)}
+{/await}
+
 <Page notFoundMessage="Template not found" empty={false} {problem} queue={ov == null ? 1: 0 }>
     <div class="w-full min-h-screen bg-muted dark:bg-background">
         <div class="max-w-[1200px] w-11/12 mx-auto py-8 flex-col space-y-8">
@@ -52,7 +64,10 @@
                 <div class="flex justify-between items-start">
                     <div>
                         <Card.Header>
-                            <Card.Title class="text-3xl">{ov?.user?.username}/{ov?.principal?.name}</Card.Title>
+                            <div class="flex items-center gap-3">
+                                <Card.Title class="text-3xl">{ov?.user?.username}/{ov?.principal?.name}</Card.Title>
+                                <Badge variant="outline" class="text-sky-600 border-sky-600">Template</Badge>
+                            </div>
                         </Card.Header>
                         <Card.Content>
                             <Card.Description>
@@ -70,12 +85,12 @@
                     <div class="flex justify-between w-full">
                         <div class="flex space-x-4">
 
-                            <a href="{ov?.principal?.project}"
+                            <a href={toSafeHref(ov?.principal?.project)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Link class="w-4 h-4"/>
                                 <div> Project</div>
                             </a>
-                            <a href="{ov?.principal?.source}"
+                            <a href={toSafeHref(ov?.principal?.source)}
                                class="flex space-x-1 items-center text-sm font-medium text-primary underline underline-offset-4">
                                 <Code2 class="w-4 h-4"/>
                                 <div> Source</div>
@@ -96,9 +111,10 @@
             </Card.Root>
 
             <Tabs.Root value="docs">
-                <Tabs.List class="grid w-full grid-cols-2 shadow-xl">
+                <Tabs.List class="grid w-full grid-cols-3 shadow-xl">
                     <Tabs.Trigger value="docs">Documentation</Tabs.Trigger>
                     <Tabs.Trigger value="version">Versions</Tabs.Trigger>
+                    <Tabs.Trigger value="dependencies">Dependencies</Tabs.Trigger>
                 </Tabs.List>
                 <Tabs.Content value="docs">
                     <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
@@ -143,6 +159,66 @@
                                     {/each}
                                 </Table.Body>
                             </Table.Root>
+                        </Card.Content>
+                        <Card.Footer>
+                        </Card.Footer>
+                    </Card.Root>
+                </Tabs.Content>
+                <Tabs.Content value="dependencies">
+                    <Card.Root class="shadow-xl dark:border-muted-foreground dark:bg-background">
+                        <Card.Header>
+                            <Card.Title>Dependencies</Card.Title>
+                            <Card.Description>
+                                Resolvers, plugins, and processors used by this template.
+                            </Card.Description>
+                        </Card.Header>
+                        <Card.Content class="space-y-4">
+                            {#if !rd.resolvers.length && !rd.plugins.length && !rd.processors.length}
+                                <p class="text-muted-foreground">No dependencies found for the latest version.</p>
+                            {:else}
+                                {#if rd.resolvers.length > 0}
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Resolvers</h4>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            {#each rd.resolvers as resolver}
+                                                <li>
+                                                    <a href="/resolvers/{resolver.userId}/{resolver.id}" class="text-primary underline">
+                                                        {resolver.name ?? 'Unnamed Resolver'}
+                                                    </a>
+                                                </li>
+                                            {/each}
+                                        </ul>
+                                    </div>
+                                {/if}
+                                {#if rd.plugins.length > 0}
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Plugins</h4>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            {#each rd.plugins as plugin}
+                                                <li>
+                                                    <a href="/plugins/{plugin.userId}/{plugin.id}" class="text-primary underline">
+                                                        {plugin.name ?? 'Unnamed Plugin'}
+                                                    </a>
+                                                </li>
+                                            {/each}
+                                        </ul>
+                                    </div>
+                                {/if}
+                                {#if rd.processors.length > 0}
+                                    <div>
+                                        <h4 class="font-semibold mb-2">Processors</h4>
+                                        <ul class="list-disc list-inside space-y-1">
+                                            {#each rd.processors as processor}
+                                                <li>
+                                                    <a href="/processors/{processor.userId}/{processor.id}" class="text-primary underline">
+                                                        {processor.name ?? 'Unnamed Processor'}
+                                                    </a>
+                                                </li>
+                                            {/each}
+                                        </ul>
+                                    </div>
+                                {/if}
+                            {/if}
                         </Card.Content>
                         <Card.Footer>
                         </Card.Footer>

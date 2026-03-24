@@ -4,10 +4,12 @@
     import Template from "$lib/components/cards/template.svelte";
     import Plugin from "$lib/components/cards/plugin.svelte";
     import Processor from "$lib/components/cards/processor.svelte";
+    import Resolver from "$lib/components/cards/resolver.svelte";
     import * as Select from "$lib/components/ui/select";
     import type {
         PluginPrincipalResp,
         ProcessorPrincipalResp,
+        ResolverPrincipalResp,
         TemplatePrincipalResp
     } from "$lib/api/core/data-contracts";
     import {toResult} from "$lib/utility";
@@ -37,6 +39,10 @@
             value: "processor",
             label: "Processor",
         },
+        {
+            value: "resolver",
+            label: "Resolver",
+        },
     ]
 
     let searchTerm = "";
@@ -55,7 +61,10 @@
             Limit: 50,
         }), "Failed to search template");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -72,7 +81,10 @@
             Limit: 50,
         }), "Failed to search plugin");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -89,7 +101,10 @@
             Limit: 50,
         }), "Failed to search processor");
         const ret = await resp.match({
-            ok: (v) => v,
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
             err: (e) => {
                 problem = e;
                 return [];
@@ -99,7 +114,27 @@
         return ret;
     }
 
-    async function find(searchTerm: string, resource: string): Promise<TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[]> {
+    async function searchResolver(searchTerm: string): Promise<ResolverPrincipalResp[]> {
+        queue++;
+        const resp = toResult(() => a.vResolverDetail("1", {
+            Search: searchTerm,
+            Limit: 50,
+        }), "Failed to search resolver");
+        const ret = await resp.match({
+            ok: (v) => {
+                problem = null;
+                return v;
+            },
+            err: (e) => {
+                problem = e;
+                return [];
+            }
+        });
+        queue--;
+        return ret;
+    }
+
+    async function find(searchTerm: string, resource: string): Promise<TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[] | ResolverPrincipalResp[]> {
         switch (resource) {
             case "template":
                 return await searchTemplate(searchTerm);
@@ -107,6 +142,8 @@
                 return await searchPlugin(searchTerm);
             case "processor":
                 return await searchProcessor(searchTerm);
+            case "resolver":
+                return await searchResolver(searchTerm);
             default:
                 return [];
         }
@@ -116,8 +153,8 @@
 
 
 
-    let r: TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[] = [];
-    function update(rr: TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[]): string {
+    let r: TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[] | ResolverPrincipalResp[] = [];
+    function update(rr: TemplatePrincipalResp[] | PluginPrincipalResp[] | ProcessorPrincipalResp[] | ResolverPrincipalResp[]): string {
         r = rr;
         return "";
     }
@@ -157,6 +194,10 @@
                 {#each r as processor}
                     <Processor {processor}/>
 
+                {/each}
+            {:else if resource.value === "resolver"}
+                {#each r as resolver}
+                    <Resolver {resolver}/>
                 {/each}
             {/if}
         </div>
