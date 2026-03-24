@@ -2,18 +2,12 @@
 with packages;
 {
   system = [
-    coreutils
-    findutils
-    gnugrep
-    gnused
-    yq-go
-    jq
+    atomiutils
   ];
 
   dev = [
     pls
     git
-    doppler
   ];
 
   infra = [

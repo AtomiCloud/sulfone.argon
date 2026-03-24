@@ -6,10 +6,16 @@ on:
 jobs:
   precommit:
     name: Pre-commit Check
-    runs-on: ubuntu-22.04
+    runs-on:
+      - nscloud-ubuntu-22.04-amd64-4x8-with-cache
+      - nscloud-cache-size-50gb
+      - nscloud-cache-tag-sulfone-argon-nix-store-cache
+      - nscloud-git-mirror-1gb
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@main
-      - uses: DeterminateSystems/magic-nix-cache-action@main
+      # setup
+      - uses: AtomiCloud/actions.setup-nix@v1.1.0
+      - uses: AtomiCloud/actions.cache-go@v1.0.1
+
+      # pre-commit
       - name: Run pre-commit
         run: nix develop .#ci -c ./scripts/ci/pre-commit.sh

@@ -24,6 +24,9 @@ eval "$auth_secret"
 
 # shellcheck disable=SC2153
 echo "🔑 Descope ID: ${DESCOPE_ID}"
+# print the length only
+echo "🔑 Descope Secret: ${#descope_secret}"
+echo "🔑 Auth Secret: ${#auth_secret}"
 
 echo "🔨 Building for branch: ${branch}"
 bun run build
